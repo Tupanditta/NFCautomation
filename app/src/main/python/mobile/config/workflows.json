@@ -1,0 +1,47 @@
+{
+    "work_mode": {
+        "mobile_actions": [
+            {
+                "action": "open_app",
+                "params": {
+                    "package_name": "spotify"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 10
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo trabajo",
+                    "message": "Workflow activado"
+                }
+            },
+            {
+                "action": "activate_vibration"
+            },
+            {
+                "action": "vibrate",
+                "params": {
+                    "duration": 100
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "work_mode_started"
+                }
+            },
+            {
+                "action": "open_url",
+                "params": {
+                    "url": "https://github.com"
+                }
+            }
+        ],
+        "laptop_task": "work_mode"
+    }
+}
