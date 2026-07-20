@@ -1,5 +1,5 @@
+from .base_error import MobileBaseError
 
-class ConfigurationError(Exception): #Hereda de la clase base Exception, así sabe que es una excepción
+class ConfigurationError(MobileBaseError): 
+  """Error lanzado cuando hay fallos en los archivos JSON de configuración."""
   pass
-
-#NOTA: python no permite una clase vacía

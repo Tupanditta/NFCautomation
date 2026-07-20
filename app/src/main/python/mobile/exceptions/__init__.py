@@ -1,9 +1,14 @@
-#NOTA: En python las excepciones son clases, donde la clase base es Exception
-
+from .base_error import MobileBaseError
 from .configuration_errors import ConfigurationError
-
 from .registry_errors import (
-  RegistryError,
-  UnknownTagError,
-  WorkflowNotFoundError
+    RegistryError,
+    UnknownTagError,
+    WorkflowNotFoundError
+)
+from .action_errors import (
+    ActionError,
+    AppNotFoundError,
+    PermissionDeniedError,
+    PermissionRequiredError,
+    ExecutionError
 )

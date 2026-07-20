@@ -1,32 +1,43 @@
 {
-    "work_mode": {
+    "work_mode_ON": {
         "mobile_actions": [
             {
-                "action": "open_app",
+                "action": "enable_dnd",
+                "params": { "enabled": true }
+            },
+            {
+                "action": "set_volume",
                 "params": {
-                    "package_name": "spotify"
+                    "level": 10,
+                    "stream": "music"
                 }
             },
             {
                 "action": "set_volume",
                 "params": {
-                    "level": 10
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "open_app",
+                "params": {
+                    "alias": "spotify"
                 }
             },
             {
                 "action": "show_notification",
                 "params": {
-                    "title": "Modo trabajo",
-                    "message": "Workflow activado"
+                    "title": "Modo Trabajo: ON",
+                    "message": "Concentración activada, brillo ajustado y notificaciones silenciadas."
                 }
             },
             {
-                "action": "activate_vibration"
-            },
-            {
-                "action": "vibrate",
+                "action": "activate_vibration",
                 "params": {
-                    "duration": 100
+                    "total_duration": 1900,
+                    "on_duration": 500,
+                    "off_duration": 200
                 }
             },
             {
@@ -34,14 +45,112 @@
                 "params": {
                     "event_name": "work_mode_started"
                 }
+            }
+        ],
+        "laptop_task": "work_mode_ON"
+    },
+    "work_mode_OFF": {
+        "mobile_actions": [
+            {
+                "action": "toggle_hotspot"
             },
             {
-                "action": "open_url",
+                "action": "enable_dnd",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "toggle_flashlight",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "desactivate_vibration"
+            },
+            {
+                "action": "set_volume",
                 "params": {
-                    "url": "https://github.com"
+                    "level": 60,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 50,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Trabajo: OFF",
+                    "message": "Estado normal restaurado."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 4000,
+                    "on_duration": 1000,
+                    "off_duration": 500
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "work_mode_finished"
                 }
             }
         ],
-        "laptop_task": "work_mode"
+        "laptop_task": "work_mode_OFF"
+    },
+    "class_mode_log": {
+        "mobile_actions": [
+            {
+                "action": "set_timer",
+                "params": {
+                    "seconds": 3000,
+                    "message": "Fin de la clase"
+                }
+            },
+            {
+                "action": "toggle_hotspot"
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Clase",
+                    "message": "Temporizador de 50 min activo y móvil silenciado."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 1000,
+                    "on_duration": 200,
+                    "off_duration": 200
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "class_mode_log"
+                }
+            }
+        ],
+        "laptop_task": "class_mode_log"
     }
 }

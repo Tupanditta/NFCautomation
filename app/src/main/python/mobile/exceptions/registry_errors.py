@@ -1,11 +1,15 @@
+from .base_error import MobileBaseError
 
-class RegistryError(Exception):
+class RegistryError(MobileBaseError):
+  """Clase base para errores relacionados con los registros (tags, workflows, acciones)."""
   pass
 
 
-class UnknownTagError(RegistryError): #El error aparece al consultar registros
+class UnknownTagError(RegistryError):
+  """Se lanza cuando un UID NFC no está registrado en tags.json."""
   pass
 
 
-class WorkflowNotFoundError(RegistryError): #El error aparece al consultar registros
+class WorkflowNotFoundError(RegistryError):
+  """Se lanza cuando un workflow id no se encuentra en workflows.json."""
   pass

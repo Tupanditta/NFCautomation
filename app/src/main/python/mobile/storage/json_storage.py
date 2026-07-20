@@ -1,15 +1,25 @@
-#Este módulo es quien lee los archivos json y los convierte a diccionarios de python
-
+# Este módulo se encarga de leer los archivos JSON y convertirlos en diccionarios de Python
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 def load_tags(config_path):
-  with open(config_path, "r", encoding="utf-8") as f: #abro el archivo json
-    tags = json.load(f) #convertir el archivo json en un diccionario de Python
-
-  return tags #devuelvo el diccionario de tags
+  """
+  Carga el archivo de tags desde la ruta proporcionada.
+  """
+  with open(config_path, "r", encoding="utf-8") as f:
+    tags = json.load(f)
+  
+  logger.info("Configuración de tags cargada correctamente")
+  return tags
 
 def load_workflows(config_path):
-  with open(config_path, "r", encoding="utf-8") as f: #abro el archivo json
-    workflows = json.load(f) #convertir el archivo json en un diccionario de Python
+  """
+  Carga el archivo de workflows desde la ruta proporcionada.
+  """
+  with open(config_path, "r", encoding="utf-8") as f:
+    workflows = json.load(f)
 
-  return workflows #devuelvo el diccionario de tags
+  logger.info("Configuración de workflows cargada correctamente")
+  return workflows

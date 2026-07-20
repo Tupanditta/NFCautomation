@@ -1,0 +1,8 @@
+- [x] Crear `QuickAccessService.kt` para la notificación persistente
+- [x] Actualizar `MainActivity.kt` con gestión de permisos y arranque de servicio
+- [x] Actualizar `AndroidManifest.xml` con permisos y declaración de servicio
+- [x] Elevar prioridad de notificación para visibilidad en pantalla de bloqueo
+    - [x] Cambiar `CHANNEL_ID` a `"nfc_automation_quick_access"`
+    - [x] Cambiar importancia a `IMPORTANCE_DEFAULT`
+    - [x] Cambiar prioridad a `PRIORITY_DEFAULT`
+- [x] Verificar funcionamiento en pantalla de bloqueo

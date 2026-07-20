@@ -1,7 +1,7 @@
-- [x] Isolate test UID in `MainActivity.kt`
-- [x] Simplify `bridge.py` and remove temporary summary logic
-- [x] Delete `hello.py` (Confirmed removed)
-- [x] Revert `mobile/dispatcher.py` (remove `execution_log`)
-- [x] Revert `mobile/actions/actions.py` (clean up comments)
-- [x] Revert all Action classes in `mobile/actions/` (remove returns)
-- [x] Verify build (Blocked by File Lock, but code is production-ready)
+# Tareas - Captura Modular de Ejecución
+
+- [x] Crear el directorio `mobile/utils/`
+- [x] Crear `mobile/utils/__init__.py`
+- [ ] Implementar `mobile/utils/log_capturer.py`
+- [ ] Actualizar `bridge.py` para integrar la captura de logs
+- [ ] Verificar la correcta visualización en Android

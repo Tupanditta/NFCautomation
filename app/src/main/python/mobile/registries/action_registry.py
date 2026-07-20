@@ -1,7 +1,6 @@
 #Este módulo tiene el único trabajo de declarar e implementar la clase ActionRegistry
 
 #importación de todas las clases (acciones-actions)
-#Más adelante voy a usar las clases como valores, para ello debo importarlas
 from mobile.actions.open_app import OpenApp
 from mobile.actions.enable_dnd import EnableDnd
 from mobile.actions.show_notification import ShowNotification
@@ -12,17 +11,21 @@ from mobile.actions.log_event import LogEvent
 from mobile.actions.desactivate_vibration import DesactivateVibration
 from mobile.actions.text_clipboard import TextClipboard
 from mobile.actions.open_url import OpenUrl
+# Nuevas acciones
+from mobile.actions.toggle_flashlight import ToggleFlashlight
+from mobile.actions.set_timer import SetTimer
+from mobile.actions.toggle_hotspot import ToggleHotspot
 
 class ActionRegistry:
   """
-  Esta clase se usa únicamente para pasar de un string 
-  a una clase que podré usar para ejecutar una acción
+  Esta clase se utiliza para mapear nombres de acciones (strings) a sus 
+  respectivas clases de implementación.
   """
 
-  def __init__(self): #Se ejecuta únicamente al llamar a la clase
+  def __init__(self):
     """
-    Creo un diccionario que relaciona todas las clases 
-    con sus respectivos strings
+    Inicializa el diccionario que relaciona los nombres de las acciones 
+    con las clases Action correspondientes.
     """
     self.actions = { 
       "open_app" : OpenApp,
@@ -34,13 +37,14 @@ class ActionRegistry:
       "activate_vibration": ActivateVibration,
       "log_event": LogEvent,
       "desactivate_vibration": DesactivateVibration,
-      "text_clipboard": TextClipboard
+      "text_clipboard": TextClipboard,
+      "toggle_flashlight": ToggleFlashlight,
+      "set_timer": SetTimer,
+      "toggle_hotspot": ToggleHotspot
     }
   
   def get_action(self, action_name): 
     """
-    Esta función interna de la clase se encarga de 
-    hayar y devolver la clase correspondiente a 
-    la acción (string) que introduzco
+    Busca y devuelve la clase de acción correspondiente al nombre proporcionado.
     """
-    return self.actions.get(action_name) #me devuelve la clase
+    return self.actions.get(action_name)

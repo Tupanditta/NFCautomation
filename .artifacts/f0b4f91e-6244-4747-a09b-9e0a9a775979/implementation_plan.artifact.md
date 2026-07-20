@@ -1,39 +1,32 @@
-# Implementation Plan - Prepare for NFC Integration
+# Plan de Implementación: Captura Modular de Ejecución
 
-This plan details the cleanup of temporary testing code and the isolation of the test UID in preparation for the real NFC integration phase.
+Este plan detalla la creación de un sistema modular para capturar los logs del motor Python y devolverlos a Android, permitiendo ver el detalle de la ejecución sin modificar el motor de lógica original.
 
-## Proposed Changes
+## Cambios Propuestos
 
-### [Component Name] Android App
+### [Component Name] Utilidades Python
 
-#### [MODIFY] [MainActivity.kt](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/java/com/example/nfcautomation/MainActivity.kt)
-- Isolate the test UID into a companion object constant `TEST_TAG_ID`.
-- Update `onCreate` to use this constant when calling `bridge.execute`.
+#### [NEW] [log_capturer.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/mobile/utils/log_capturer.py)
+Crearemos un nuevo módulo de utilidad para encapsular la lógica de captura:
+- **Clase `LogCapturer`**: Funcionará como un *Context Manager* (usando `with`) para asegurar que la captura comience y termine limpiamente.
+- **Intercepción**: Capturará los mensajes de log de nivel `INFO` o superior generados durante la ejecución.
 
-### [Component Name] Python Bridge & Cleanup
+#### [NEW] [__init__.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/mobile/utils/__init__.py)
+- Archivo necesario para que la nueva carpeta `utils` sea tratada como un paquete Python.
+
+### [Component Name] Puente Python (Android Interface)
 
 #### [MODIFY] [bridge.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/bridge.py)
-- Remove the temporary execution summary logic.
-- Simplify the return value to a basic success/error status string.
+- Importar y utilizar la nueva clase `LogCapturer`.
+- Envolver la ejecución del `Dispatcher` dentro del bloque `with LogCapturer(...)`.
+- Formatear la respuesta final combinando el éxito de la operación con los detalles capturados del log.
 
-#### [DELETE] [hello.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/hello.py)
-- Remove the initial test script as it is no longer needed.
-
-### [Component Name] Python Mobile Core (Cleanup)
-
-#### [MODIFY] [mobile/dispatcher.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/mobile/dispatcher.py)
-- Remove `execution_log` and associated logic marked as "TEMPORARY ANDROID TEST".
-
-#### [MODIFY] [mobile/actions/actions.py](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/mobile/actions/actions.py)
-- Remove the temporary comment while keeping the corrected `execute()` signature.
-
-#### [MODIFY] All files in [mobile/actions/](file:///C:/Users/ander/Desktop/Kirby/NFCAutomation/app/src/main/python/mobile/actions/)
-- Revert the `execute()` methods to only perform their primary logic (logging) and remove return values/temporary comments.
-
-## Verification Plan
-
-### Automated Tests
-- Run `./gradlew assembleDebug` to ensure the project builds correctly.
+## Verificación Plan
 
 ### Manual Verification
-- Verify that clicking "Run" still triggers the Python execution and displays a "Success" message (or error) in the UI, but without the detailed action list.
+- Leer una etiqueta NFC real o simular el UID en los archivos JSON.
+- Verificar que la UI de Android muestra no solo el mensaje de éxito, sino también la lista de acciones realizadas (ej: "Vibrando...", "Abriendo URL...").
+
+---
+> [!NOTE]
+> Todos los nuevos archivos tendrán **docstrings en castellano** y código técnico en **inglés**, manteniendo la consistencia solicitada.
