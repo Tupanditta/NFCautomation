@@ -23,3 +23,15 @@ def load_workflows(config_path):
 
   logger.info("Configuración de workflows cargada correctamente")
   return workflows
+
+def save_tags(config_path, tags):
+    """Guarda el diccionario de tags en el JSON."""
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(tags, f, indent=4)
+    logger.info("Tags guardados correctamente")
+
+def save_workflows(config_path, workflows):
+    """Guarda el diccionario de workflows en el JSON."""
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(workflows, f, indent=4)
+    logger.info("Workflows guardados correctamente")

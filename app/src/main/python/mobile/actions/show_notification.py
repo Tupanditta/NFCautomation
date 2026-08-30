@@ -1,4 +1,4 @@
-#Contiene la clase ShowNotification
+# Contiene la clase ShowNotification
 
 from mobile.actions.actions import Action
 import logging
@@ -13,3 +13,6 @@ class ShowNotification(Action):
 
   def execute(self):
     logger.info(f"{self.title} - {self.message}")
+
+  def get_summary(self):
+    return self.title

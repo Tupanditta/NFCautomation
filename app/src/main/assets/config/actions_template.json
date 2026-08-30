@@ -1,0 +1,93 @@
+{
+    "descripción": "Bocetos de todas las acciones disponibles. Copia y pega el bloque dentro de 'mobile_actions' en workflows.json.",
+    "plantillas": [
+        {
+            "action": "open_app",
+            "params": {
+                "alias": "nombre_app_o_alias"
+            },
+            "notas": "Alias: spotify, youtube, whatsapp, instagram, maps, gmail, chrome, calculadora, reloj, ajustes"
+        },
+        {
+            "action": "open_url",
+            "params": {
+                "url": "https://www.google.com"
+            },
+            "notas": "Soporta web (https://), mapas (geo:lat,long), teléfono (tel:123), etc."
+        },
+        {
+            "action": "set_volume",
+            "params": {
+                "level": 50,
+                "stream": "music"
+            },
+            "notas": "Streams: music, notification, ring, alarm. Level: 0-100."
+        },
+        {
+            "action": "vibrate",
+            "params": {
+                "duration": 500
+            },
+            "notas": "Vibración única. Duración en milisegundos."
+        },
+        {
+            "action": "activate_vibration",
+            "params": {
+                "total_duration": 5000,
+                "on_duration": 200,
+                "off_duration": 100
+            },
+            "notas": "total_duration (total), on_duration (vibra), off_duration (para). Todo en ms. 0 en total_duration = infinito."
+        },
+        {
+            "action": "desactivate_vibration",
+            "notas": "Detiene la vibración continua."
+        },
+        {
+            "action": "text_clipboard",
+            "params": {
+                "text": "Texto a copiar"
+            }
+        },
+        {
+            "action": "enable_dnd",
+            "params": {
+                "enabled": true
+            },
+            "notas": "Requiere permiso manual de 'Acceso a No molestar' (una sola vez)."
+        },
+        {
+            "action": "toggle_flashlight",
+            "params": {
+                "enabled": null
+            },
+            "notas": "Usa 'true', 'false' o 'null' para conmutar el estado."
+        },
+        {
+            "action": "set_timer",
+            "params": {
+                "seconds": 60,
+                "message": "Arroz listo"
+            },
+            "notas": "Abre la app de Reloj para confirmar el temporizador."
+        },
+        {
+            "action": "toggle_hotspot",
+            "notas": "Abre la pantalla de ajustes de Punto de acceso para activarlo manualmente."
+        },
+        {
+            "action": "log_event",
+            "params": {
+                "event_name": "nombre_del_evento"
+            }
+        },
+        {
+            "action": "show_notification",
+            "params": {
+                "title": "Título",
+                "message": "Mensaje de la notificación"
+            },
+            "notas": "Actualmente solo genera un log en el sistema (requiere permisos de notificación en Android 13+)."
+        }
+    ]
+}

@@ -1,0 +1,141 @@
+{
+    "es": {
+        "actions": {
+            "open_app": "Abrir Aplicación",
+            "open_url": "Abrir Enlace",
+            "enable_dnd": "Modo No Molestar",
+            "set_volume": "Ajustar Volumen",
+            "show_notification": "Mostrar Notificación",
+            "vibrate": "Vibración Única",
+            "activate_vibration": "Vibración Continua",
+            "log_event": "Registrar Evento",
+            "desactivate_vibration": "Detener Vibración",
+            "text_clipboard": "Copiar al Portapapeles",
+            "toggle_flashlight": "Linterna",
+            "set_timer": "Temporizador",
+            "toggle_hotspot": "Punto de Acceso"
+        },
+        "workflows": {
+            "work_mode": "Modo Trabajo",
+            "class_mode": "Modo Clase",
+            "night": "Modo Noche",
+            "app_init": "Inicialización"
+        },
+        "logs": {
+            "status_on": "ON",
+            "status_off": "OFF",
+            "attended_class_title": "Clase Registrada",
+            "unmark_attendance": "Marcar como no asistida",
+            "start_exec": "Iniciando ejecución para tag: {0}",
+            "start_wf": "Ejecutando workflow: {0}",
+            "laptop_task": "Tarea de PC pendiente: {0}",
+            "mode_on": "Activando modo exclusivo: {0}",
+            "mode_off": "Desactivando modo: {0}",
+            "mode_change": "Cambiando modo {0}: {1} -> {2}",
+            "force_off": "Forzando apagado de '{0}' desde la interfaz",
+            "sync_err": "Error al sincronizar notificación: {0}",
+            "success": "Ejecución finalizada sin errores",
+            "unknown_action": "Acción no registrada: {0}",
+            "lock_msg": "⚠️ Bloqueo: El modo '{0}' ya está activo. Desactívalo primero.",
+            "mode_system": "de sistema"
+        },
+        "errors": {
+            "UnknownTagError": "Etiqueta no registrada",
+            "WorkflowNotFoundError": "Automatización no encontrada",
+            "MobileBaseError": "Error de sistema",
+            "ConfigurationError": "Error de configuración",
+            "msg_unknown_tag": "UID no registrado: {0}",
+            "msg_wf_not_found": "Automatización no encontrada: {0}"
+        }
+    },
+    "en": {
+        "actions": {
+            "open_app": "Open Application",
+            "open_url": "Open Link",
+            "enable_dnd": "Do Not Disturb",
+            "set_volume": "Set Volume",
+            "show_notification": "Show Notification",
+            "vibrate": "Single Vibration",
+            "activate_vibration": "Continuous Vibration",
+            "log_event": "Log Event",
+            "desactivate_vibration": "Stop Vibration",
+            "text_clipboard": "Copy to Clipboard",
+            "toggle_flashlight": "Flashlight",
+            "set_timer": "Timer",
+            "toggle_hotspot": "Hotspot"
+        },
+        "workflows": {
+            "work_mode": "Work Mode",
+            "class_mode": "Class Mode",
+            "night": "Night Mode",
+            "app_init": "Initialization"
+        },
+        "logs": {
+            "start_exec": "Starting execution for tag: {0}",
+            "start_wf": "Executing workflow: {0}",
+            "laptop_task": "Pending Laptop task: {0}",
+            "mode_on": "Activating exclusive mode: {0}",
+            "mode_off": "Deactivating mode: {0}",
+            "mode_change": "Changing {0} mode: {1} -> {2}",
+            "force_off": "Forcing '{0}' OFF from UI",
+            "sync_err": "Error syncing notification: {0}",
+            "success": "Execution finished without errors",
+            "unknown_action": "Action not registered: {0}",
+            "lock_msg": "⚠️ Blocked: Mode '{0}' is already active. Deactivate it first.",
+            "mode_system": "system"
+        },
+        "errors": {
+            "UnknownTagError": "Unregistered tag",
+            "WorkflowNotFoundError": "Automation not found",
+            "MobileBaseError": "System error",
+            "ConfigurationError": "Configuration error",
+            "msg_unknown_tag": "Unregistered UID: {0}",
+            "msg_wf_not_found": "Automation not found: {0}"
+        }
+    },
+    "eu": {
+        "actions": {
+            "open_app": "Aplikazioa Ireki",
+            "open_url": "Lotura Ireki",
+            "enable_dnd": "Ez Gogoratu Modua",
+            "set_volume": "Bolumena Egokitu",
+            "show_notification": "Jakinarazpena Erakutsi",
+            "vibrate": "Vibrazio Bakarra",
+            "activate_vibration": "Etengabeko Vibrazioa",
+            "log_event": "Gertaera Erregistratu",
+            "desactivate_vibration": "Vibrazioa Gelditu",
+            "text_clipboard": "Arbelera Kopiatu",
+            "toggle_flashlight": "Linterna",
+            "set_timer": "Tenporizadorea",
+            "toggle_hotspot": "Sarbide Puntua"
+        },
+        "workflows": {
+            "work_mode": "Lan Modua",
+            "class_mode": "Klase Modua",
+            "night": "Gau Modua",
+            "app_init": "Hasieratzea"
+        },
+        "logs": {
+            "start_exec": "Tag-aren exekuzioa hasten: {0}",
+            "start_wf": "Workflow-a exekutatzen: {0}",
+            "laptop_task": "PC-ko zeregina zain: {0}",
+            "mode_on": "Modu esklusiboa aktibatzen: {0}",
+            "mode_off": "Modua desaktibatzen: {0}",
+            "mode_change": "{0} modua aldatzen: {1} -> {2}",
+            "force_off": "'{0}' itzaltzea behartzen interfazetik",
+            "sync_err": "Errorea jakinarazpena sinkronizatzean: {0}",
+            "success": "Exekuzioa errorerik gabe amaitu da",
+            "unknown_action": "Erregistratu gabeko ekintza: {0}",
+            "lock_msg": "⚠️ Blokeoa: '{0}' modua aktibatuta dago dagoeneko. Desaktibatu lehenago.",
+            "mode_system": "sistemakoa"
+        },
+        "errors": {
+            "UnknownTagError": "Erregistratu gabeko etiketa",
+            "WorkflowNotFoundError": "Automatizazioa ez da aurkitu",
+            "MobileBaseError": "Sistema errorea",
+            "ConfigurationError": "Konfigurazio errorea",
+            "msg_unknown_tag": "Erregistratu gabeko UID: {0}",
+            "msg_wf_not_found": "Automatizazioa ez da aurkitu: {0}"
+        }
+    }
+}

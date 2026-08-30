@@ -34,3 +34,8 @@ class ToggleFlashlight(Action):
         except Exception as e:
             logger.error(f"Error al controlar la linterna: {e}")
             raise e
+
+    def get_summary(self):
+        if self.enabled is True: return "Encender Linterna"
+        if self.enabled is False: return "Apagar Linterna"
+        return "Conmutar Linterna"

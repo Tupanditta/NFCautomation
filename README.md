@@ -1,83 +1,81 @@
-# 📱 NFC Automation
+# 📱 NFC Automation & Attendance Tracker
 
 ![Android](https://img.shields.io/badge/Platform-Android-brightgreen.svg)
 ![Python](https://img.shields.io/badge/Language-Python%20%2F%20Kotlin-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-**NFC Automation** es una herramienta de automatización avanzada para Android que permite ejecutar flujos de trabajo complejos mediante el uso de etiquetas NFC. El proyecto integra un motor de lógica en **Python** dentro de una arquitectura nativa en **Kotlin**, permitiendo una extensibilidad sin precedentes.
+**NFC Automation** es una herramienta de productividad avanzada para Android que combina la potencia de las etiquetas NFC con un sistema inteligente de gestión de asistencia académica. El proyecto integra un motor de lógica en **Python** dentro de una arquitectura nativa en **Kotlin**, permitiendo una automatización y un seguimiento de datos sin precedentes.
+
+---
+
+## 🚀 Características Principales
+
+### 🎯 Automatización NFC
+- **Flujos de Trabajo Complejos**: Ejecuta múltiples acciones con un solo toque (vibración, volumen, DND, temporizadores, etc.).
+- **Modos de Operación**: Soporte para modos "Toggle" (ON/OFF) vinculados a una sola etiqueta.
+- **Acceso Rápido**: Notificación persistente para ejecución instantánea desde la pantalla de bloqueo.
+- **Detección Resiliente**: Prioridad máxima en el filtrado de NFC (1000) para evitar diálogos del sistema.
+
+### 🎓 Control de Asistencia Académica
+- **Calendario Inteligente**: Gestión automática de cuatrimestres (Q1/Q2), festivos y periodos de exámenes.
+- **Horarios Flexibles**: Soporte para clases de Teoría (T) y Práctica (P) con detalles de aula, piso y edificio.
+- **Gestión de Excepciones**: Modifica el horario de un día específico sin alterar el calendario base (útil para cambios puntuales o recuperaciones).
+- **Estadísticas en Tiempo Real**: Seguimiento visual de clases asistidas, perdidas y próximas, con cálculo automático de porcentajes.
+- **Exportación de Datos**: Generación de informes en formato JSON y PDF para auditoría personal.
 
 ---
 
 ## 🏗️ Arquitectura del Sistema
 
-*   **Capa de Interfaz y Hardware (Kotlin/Compose)**: Gestiona la detección física de etiquetas NFC, el ciclo de vida de la aplicación y el acceso rápido desde la pantalla de bloqueo.
-*   **Motor de Lógica (Python/Chaquopy)**: El núcleo del sistema que procesa configuraciones, valida datos y coordina la ejecución de acciones modulares.
-*   **Configuración Declarativa (JSON)**: Permite definir comportamientos complejos sin necesidad de modificar el código fuente de la aplicación.
+*   **Capa de Interfaz (Kotlin/Compose)**: UI moderna con Material 3, widgets para la pantalla de inicio (Glance) y gestión de hardware.
+*   **Motor de Lógica (Python/Chaquopy)**: El núcleo del sistema que procesa configuraciones, gestiona el calendario académico y coordina las acciones.
+*   **Almacenamiento Local (JSON)**: Base de datos ligera y editable para configuraciones, logs y horarios.
 
 ---
 
-## 🚀 Acciones Implementadas
+## 🛠️ Acciones de Automatización
 
-El motor cuenta con una librería de acciones modulares listas para usar:
-
-### 🛠️ Control de Dispositivo
-- **Volumen Modular (`set_volume`)**: Ajusta canales específicos (`music`, `notification`, `ring`, `alarm`).
-- **No Molestar (`enable_dnd`)**: Activa/desactiva el modo silencio con auto-guía de permisos.
-- **Temporizador (`set_timer`)**: Configuración inmediata de cuentas atrás.
-- **Linterna (`toggle_flashlight`)**: Control directo del LED.
-- **Punto de Acceso (`toggle_hotspot`)**: Acceso directo a la configuración de Hotspot.
-
-### 🌐 Conectividad y Utilidades
-- **Apertura de Apps (`open_app`)**: Uso de alias amigables como `spotify` o `youtube`.
-- **Navegación URL (`open_url`)**: Soporte para `https://`, `geo:` y `tel:`.
-- **Portapapeles (`text_clipboard`)**: Copiado automático de cadenas de texto.
-- **Logs de Eventos (`log_event`)**: Registro de hitos de ejecución.
-
-### 📳 Respuesta Háptica
-- **Vibración Simple (`vibrate`)**: Pulsos rápidos de confirmación.
-- **Vibración Continua (`activate_vibration`)**: Patrones rítmicos personalizables con duración total definida.
-- **Detener Vibración (`desactivate_vibration`)**: Limpieza inmediata de efectos activos.
-
----
-
-## ✨ Características Principales
-
-*   **Acceso Rápido Persistente**: Notificación de baja prioridad pero permanente en la pantalla de bloqueo.
-*   **Ejecución Resiliente**: Arquitectura de errores que garantiza la continuidad del flujo aunque falle una acción.
-*   **Prioridad NFC Optimizada**: Filtros configurados con prioridad máxima (1000) para minimizar diálogos del sistema.
-*   **Adaptación HyperOS**: Lógica diseñada específicamente para las restricciones de energía y permisos de Xiaomi.
+| Acción | Descripción | Parámetros |
+| :--- | :--- | :--- |
+| `set_volume` | Ajusta el volumen del sistema | `stream`, `level` |
+| `enable_dnd` | Controla el modo "No Molestar" | `enabled` |
+| `track_time` | Registra eventos de tiempo | `mode`, `event`, `details` |
+| `toggle_flashlight` | Controla el LED de la cámara | `enabled` |
+| `set_timer` | Inicia una cuenta atrás | `duration_seconds` |
+| `vibrate` | Feedback háptico inmediato | `duration_ms` |
+| `open_app` | Lanza aplicaciones instaladas | `alias` |
 
 ---
 
 ## 📂 Estructura de Configuración
 
-Toda la lógica reside en `app/src/main/python/mobile/config/`:
+La lógica y los datos residen en `app/src/main/assets/config/` y se sincronizan con el motor Python:
 
-| Archivo | Función |
-| :--- | :--- |
-| `tags.json` | Mapeo de UIDs físicos a nombres de Workflows. |
-| `workflows.json` | Lista secuencial de acciones a ejecutar. |
-| `actions_template.json` | Guía de referencia para parámetros y sintaxis. |
+- `calendar_config.json`: Definición de semestres y festivos.
+- `schedule_q1.json` / `schedule_q2.json`: Horarios base por cuatrimestre.
+- `workflows.json`: Definición secuencial de automatizaciones.
+- `time_logs.json`: Registro histórico de asistencias y eventos.
 
 ---
 
-## ⚠️ Requisitos Críticos (Xiaomi/HyperOS)
+## ⚠️ Requisitos de Instalación (Xiaomi/HyperOS)
 
 > [!IMPORTANT]
-> Para el correcto funcionamiento de la detección automática y el control de hardware, se deben conceder manualmente los siguientes permisos en **Info. de la aplicación > Otros permisos**:
-> - **Modificar ajustes del sistema** (Obligatorio para el modo DND).
-> - **Mostrar ventanas emergentes mientras se ejecuta en segundo plano** (Obligatorio para el auto-abierto).
-> - **Inicio automático** (Para que el NFC pueda despertar a la app).
+> Para garantizar el funcionamiento en segundo plano y el control de hardware, conceda estos permisos en **Ajustes > Aplicaciones > NFC Automation > Otros permisos**:
+> - **Modificar ajustes del sistema** (Para DND/Volumen).
+> - **Mostrar ventanas emergentes en segundo plano** (Para auto-abierto).
+> - **Inicio automático**.
 > - **Ahorro de batería > Sin restricciones**.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Stack Tecnológico
 
-- **Kotlin** & **Jetpack Compose** para la interfaz moderna.
-- **Python 3.11** para la lógica de negocio.
-- **Chaquopy** como puente de integración.
-- **Material 3** para el diseño visual.
+- **Android SDK** (API 34+)
+- **Jetpack Compose** (UI declarativa)
+- **Chaquopy 15.0** (Python SDK para Android)
+- **Python 3.11** (Lógica de negocio y procesamiento de datos)
+- **Jetpack Glance** (App Widgets)
 
 ---
-© 2026 NFC Automation Project
+© 2026 NFC Automation Project - Desarrollado por TUPANDITTA

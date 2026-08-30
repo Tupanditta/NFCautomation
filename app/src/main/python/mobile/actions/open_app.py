@@ -56,3 +56,6 @@ class OpenApp(Action):
     except Exception as e:
         logger.error(f"Error al abrir aplicación: {e}")
         raise e
+
+  def get_summary(self):
+      return f"Abrir {self.alias.capitalize()}"

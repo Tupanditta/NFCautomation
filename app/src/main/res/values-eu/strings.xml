@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">UPNAAA</string>
+
+    <!-- Menu Nagusia -->
+    <string name="nfc_ready">NFC SISTEMA PREST</string>
+    <string name="nfc_disabled">NFC DESAKTIBATUTA</string>
+    <string name="scanning">Etiketak eskaneatzen...</string>
+    <string name="activate_nfc">Aktibatu automatizatzeko</string>
+    <string name="active_mode_label">EGUNGO MODUA</string>
+    <string name="idle">EZER</string>
+    <string name="manual_launch">ESKUZKO ABIARAZTEA</string>
+    <string name="select_automation">Hautatu automatizazioa</string>
+    <string name="active_prefix">AKTIBO: %s</string>
+    <string name="workflow_label">Automatizazioa</string>
+
+    <!-- Ajusteak -->
+    <string name="settings_title">AJUSTEAK</string>
+    <string name="tab_tags">ETIKETAK</string>
+    <string name="tab_workflows">AUTOMATIZAZIOAK</string>
+    <string name="tab_config">KONFIGURAZIOA</string>
+
+    <!-- Konfigurazioa -->
+    <string name="section_system">INTERFAZEA ETA SISTEMA</string>
+    <string name="notif_perm_title">Etengabeko Jakinarazpena</string>
+    <string name="notif_perm_desc">Sarbide azkarra egoera-barratik</string>
+    <string name="dark_mode_title">Modu Iluna</string>
+    <string name="dark_mode_desc">Aplikazioaren itxura bisuala</string>
+    <string name="section_info">INFORMAZIOA</string>
+    <string name="version_label">Bertsioa</string>
+    <string name="developer_label">Garatzailea</string>
+    <string name="designed_by">%s-K DISEINATUA</string>
+    <string name="language_label">Hizkuntza</string>
+    <string name="lang_es">Gaztelania</string>
+    <string name="lang_en">Ingelesa</string>
+    <string name="lang_eu">Euskara</string>
+
+    <!-- Elkarrizketa-koadroak -->
+    <string name="dialog_save">GORDE</string>
+    <string name="dialog_cancel">UTZI</string>
+    <string name="dialog_back">ATZERA</string>
+    <string name="dialog_delete_title">Ezabatzeko Segurtasuna</string>
+    <string name="dialog_delete_msg">Ziur zaude \'%s\' ezabatu nahi duzula? Ekintza hau ezin da desegin.</string>
+    <string name="dialog_delete_confirm">EZABATU BETIKO</string>
+    <string name="dialog_password">Pasahitza</string>
+    <string name="dialog_new_tag_title">Etiketa Berria Erregistratu</string>
+    <string name="dialog_new_tag_msg">Hurbildu NFC etiketa telefonora...</string>
+    <string name="dialog_assign_title">Esleitu Automatizazioa</string>
+    <string name="dialog_create_new">➕ BERRIA SORTU...</string>
+    <string name="dialog_new_wf_title">Automatizazio Berria</string>
+    <string name="dialog_wf_name">Workflow Izena</string>
+    <string name="dialog_create_assign">SORTU ETA ESLEITU</string>
+    <string name="dialog_rename_title">Automatizazioa Berrizendatu</string>
+    <string name="dialog_id_technical">ID Teknikoa</string>
+    <string name="dialog_is_mode">Modu gisa konfiguratu (ON/OFF alternantzia)</string>
+    <string name="label_mode">MODUA</string>
+    <string name="label_mode_toggle">MODUA (ON/OFF)</string>
+
+    <!-- Editorea -->
+    <string name="edit_prefix">EDITATU: %s</string>
+    <string name="add_action">Ekintza Gehitu</string>
+    <string name="actions_config_count">%d ekintza konfiguratuta</string>
+
+    <!-- Exekuzioa -->
+    <string name="execution_title">EXEKUZIOA</string>
+    <string name="issues_detected">GABEZI DETEKTATUAK</string>
+    <string name="deactivate_mode">MODUA DESAKTIBATU</string>
+    <string name="reactivate_mode">BERRIRO AKTIBATU</string>
+    <string name="back_to_start">HASIERARA ITZULI</string>
+    <string name="unknown_target">EZEZAGUNA</string>
+    <string name="actions_performed">EGINDAKO EKINTZAK</string>
+    <string name="class_registered">KLASEA ERREGISTRATUA</string>
+    <string name="unmark_attendance">Ez bertaratutzat markatu</string>
+
+    <!-- Asistentzia eta Ordutegia -->
+    <string name="attendance_title">ASISTENTZIA</string>
+    <string name="schedule_title">KLASEKO ORDUTEGIA</string>
+    <string name="filter_day">GAUR</string>
+    <string name="filter_week">ASTEA</string>
+    <string name="filter_month">HILABETEA</string>
+    <string name="attended_label">BERTARATUA</string>
+    <string name="missed_label">HUTSEGINA</string>
+    <string name="upcoming_label">ZEHAZTU GABE</string>
+    <string name="all_label">DENAK</string>
+    <string name="attendance_rate">Asistentzia Tasa</string>
+    <string name="no_records">Ez dago klase erregistrorik epe honetan</string>
+    <string name="status_attended">Bertaratua</string>
+    <string name="status_missed">Hutsegina</string>
+    <string name="status_upcoming">Zain</string>
+    <string name="edit_schedule">ORDUTEGIA EDITATU</string>
+    <string name="add_class">Klasea Gehitu</string>
+    <string name="subject_label">Ikasgaia</string>
+    <string name="start_time_label">Hasiera</string>
+    <string name="end_time_label">Amaiera</string>
+    <string name="room_label">Gela</string>
+    <string name="floor_label">Solairua</string>
+    <string name="building_label">Eraikina</string>
+    <string name="save_schedule">ORDUTEGIA GORDE</string>
+    <string name="enter_password">Sartu pasahitza editatzeko</string>
+    <string name="semester_q1">1. Lauhilekoa</string>
+    <string name="semester_q2">2. Lauhilekoa</string>
+    <string name="modify_day">EGUNA ALDATU</string>
+    <string name="restore_base">BERREZARRI</string>
+    <string name="exception_notice">Ordutegia aldatuta egun honetarako</string>
+    <string name="select_date">Hautatu eskola-eguna</string>
+    <string name="edit_day_title">Editatu: %s</string>
+    <string name="class_name_hint">Ikasgaiaren izena</string>
+    <string name="add_class_short">Gehitu</string>
+    <string name="session_theory">TEORIA</string>
+    <string name="session_practice">PRAKTIKA</string>
+    <string name="session_type_label">Saio Mota</string>
+
+    <!-- Esportazioa -->
+    <string name="export_title">INFORMEA ESPORTATU</string>
+    <string name="export_desc">Hautatu epea Excel fitxategia (.xlsx) sortzeko</string>
+    <string name="export_week">Aste Honetan</string>
+    <string name="export_month">Hilabete Honetan</string>
+    <string name="export_semester">Lauhileko (%s)</string>
+    <string name="export_year">Ikasturte Osoa</string>
+    <string name="exporting_msg">Fitxategia sortzen...</string>
+    <string name="export_success">Informea ongi sortu da</string>
+    <string name="export_error">Errorea informea esportatzean: %s</string>
+
+    <!-- Widgets -->
+    <string name="widget_daily_list_title">Klaseen Zerrenda</string>
+    <string name="widget_daily_list_desc">Gaurko ikasgaiak eta orduak erakusten ditu.</string>
+    <string name="widget_class_detail_title">Klasearen Xehetasuna</string>
+    <string name="widget_class_detail_desc">Klase bakoitzaren informazio zehatza eta interaktiboa.</string>
+    <string name="no_classes_today">Gaur ez dago klaserik</string>
+    <string name="holiday_today">Jai-eguna!</string>
+
+    <!-- Nfc Mezua -->
+    <string name="msg_waiting_tag">NFC etiketa baten zain...</string>
+    <string name="msg_tag_detected">Tag-a detektatua: </string>
+    <string name="msg_processing">Prozesatzen...</string>
+    <string name="msg_success">NFC etiketa ongi lotu da!</string>
+    <string name="err_no_nfc">Errorea: Gailu honek ez du NFC hardwarerik.</string>
+    <string name="err_nfc_disabled">Errorea: NFC-a desaktibatuta dago. Mesedez, aktibatu ezarpenetan.</string>
+    <string name="err_read_fail">Errorea: Ezin izan da etiketaren IDa irakurri.</string>
+    <string name="err_python">Logika motorraren errorea (Python): </string>
+    <string name="err_unexpected">Ustekabeko errorea: </string>
+</resources>

@@ -1,3 +1,141 @@
 <resources>
-    <string name="app_name">NFCAutomation</string>
+    <string name="app_name">UPNAAA</string>
+
+    <!-- Menu principal -->
+    <string name="nfc_ready">SISTEMA NFC LISTO</string>
+    <string name="nfc_disabled">NFC DESACTIVADO</string>
+    <string name="scanning">Escaneando etiquetas...</string>
+    <string name="activate_nfc">Actívalo para automatizar</string>
+    <string name="active_mode_label">MODO ACTUAL</string>
+    <string name="idle">REPOSO</string>
+    <string name="manual_launch">LANZAMIENTO MANUAL</string>
+    <string name="select_automation">Seleccionar automatización</string>
+    <string name="active_prefix">ACTIVO: %s</string>
+    <string name="workflow_label">Automatización</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">AJUSTES</string>
+    <string name="tab_tags">ETIQUETAS</string>
+    <string name="tab_workflows">AUTOMATIZACIONES</string>
+    <string name="tab_config">CONFIGURACIÓN</string>
+
+    <!-- Configuración -->
+    <string name="section_system">INTERFAZ Y SISTEMA</string>
+    <string name="notif_perm_title">Notificación Permanente</string>
+    <string name="notif_perm_desc">Acceso rápido desde la barra de estado</string>
+    <string name="dark_mode_title">Modo Oscuro</string>
+    <string name="dark_mode_desc">Apariencia visual de la aplicación</string>
+    <string name="section_info">INFORMACIÓN</string>
+    <string name="version_label">Versión</string>
+    <string name="developer_label">Desarrollador</string>
+    <string name="designed_by">DISEÑADO POR %s</string>
+    <string name="language_label">Idioma</string>
+    <string name="lang_es">Castellano</string>
+    <string name="lang_en">English</string>
+    <string name="lang_eu">Euskara</string>
+
+    <!-- Diálogos -->
+    <string name="dialog_save">GUARDAR</string>
+    <string name="dialog_cancel">CANCELAR</string>
+    <string name="dialog_back">ATRÁS</string>
+    <string name="dialog_delete_title">Seguridad de Borrado</string>
+    <string name="dialog_delete_msg">¿Estás seguro de borrar \'%s\'? Esta acción no se puede deshacer.</string>
+    <string name="dialog_delete_confirm">BORRAR DEFINITIVAMENTE</string>
+    <string name="dialog_password">Contraseña</string>
+    <string name="dialog_new_tag_title">Registrar Nueva Etiqueta</string>
+    <string name="dialog_new_tag_msg">Acerca la pegatina NFC al teléfono...</string>
+    <string name="dialog_assign_title">Asignar Automatización</string>
+    <string name="dialog_create_new">➕ CREAR NUEVA...</string>
+    <string name="dialog_new_wf_title">Nueva Automatización</string>
+    <string name="dialog_wf_name">Nombre del Workflow</string>
+    <string name="dialog_create_assign">CREAR Y ASIGNAR</string>
+    <string name="dialog_rename_title">Renombrar Automatización</string>
+    <string name="dialog_id_technical">ID Técnico</string>
+    <string name="dialog_is_mode">Configurar como Modo (Alternancia ON/OFF)</string>
+    <string name="label_mode">MODO</string>
+    <string name="label_mode_toggle">MODO (ON/OFF)</string>
+
+    <!-- Editor -->
+    <string name="edit_prefix">EDITAR: %s</string>
+    <string name="add_action">Añadir Acción</string>
+    <string name="actions_config_count">%d acciones configuradas</string>
+
+    <!-- Ejecución -->
+    <string name="execution_title">EJECUCIÓN</string>
+    <string name="issues_detected">INCIDENCIAS DETECTADAS</string>
+    <string name="deactivate_mode">DESACTIVAR MODO</string>
+    <string name="reactivate_mode">VOLVER A ACTIVAR</string>
+    <string name="back_to_start">VOLVER AL INICIO</string>
+    <string name="unknown_target">DESCONOCIDO</string>
+    <string name="actions_performed">ACCIONES REALIZADAS</string>
+    <string name="class_registered">CLASE REGISTRADA</string>
+    <string name="unmark_attendance">Marcar como no asistida</string>
+
+    <!-- Asistencia y Horario -->
+    <string name="attendance_title">ASISTENCIA</string>
+    <string name="schedule_title">HORARIO DE CLASES</string>
+    <string name="filter_day">HOY</string>
+    <string name="filter_week">SEMANA</string>
+    <string name="filter_month">MES</string>
+    <string name="attended_label">ASISTIDAS</string>
+    <string name="missed_label">FALTADAS</string>
+    <string name="upcoming_label">PENDIENTES</string>
+    <string name="all_label">TODAS</string>
+    <string name="attendance_rate">Tasa de Asistencia</string>
+    <string name="no_records">No hay clases registradas en este periodo</string>
+    <string name="status_attended">Asistido</string>
+    <string name="status_missed">Faltado</string>
+    <string name="status_upcoming">Pendiente</string>
+    <string name="edit_schedule">EDITAR HORARIO</string>
+    <string name="add_class">Añadir Clase</string>
+    <string name="subject_label">Asignatura</string>
+    <string name="start_time_label">Inicio</string>
+    <string name="end_time_label">Fin</string>
+    <string name="room_label">Aula</string>
+    <string name="floor_label">Piso</string>
+    <string name="building_label">Edificio</string>
+    <string name="save_schedule">GUARDAR HORARIO</string>
+    <string name="enter_password">Introduce la contraseña para editar</string>
+    <string name="semester_q1">1º Cuatrimestre</string>
+    <string name="semester_q2">2º Cuatrimestre</string>
+    <string name="modify_day">MODIFICAR DÍA</string>
+    <string name="restore_base">RESTAURAR BASE</string>
+    <string name="exception_notice">Horario modificado para este día</string>
+    <string name="select_date">Seleccionar día lectivo</string>
+    <string name="edit_day_title">Editar: %s</string>
+    <string name="class_name_hint">Nombre de la asignatura</string>
+    <string name="add_class_short">Añadir</string>
+    <string name="session_theory">TEORÍA</string>
+    <string name="session_practice">PRÁCTICA</string>
+    <string name="session_type_label">Tipo de Sesión</string>
+
+    <!-- Exportación -->
+    <string name="export_title">EXPORTAR INFORME</string>
+    <string name="export_desc">Elige el periodo para generar el archivo Excel (.xlsx)</string>
+    <string name="export_week">Semana Actual</string>
+    <string name="export_month">Mes Actual</string>
+    <string name="export_semester">Cuatrimestre (%s)</string>
+    <string name="export_year">Año Académico Completo</string>
+    <string name="exporting_msg">Generando archivo...</string>
+    <string name="export_success">Informe generado con éxito</string>
+    <string name="export_error">Error al exportar informe: %s</string>
+
+    <!-- Widgets -->
+    <string name="widget_daily_list_title">Lista de Clases</string>
+    <string name="widget_daily_list_desc">Muestra las asignaturas y horas de hoy.</string>
+    <string name="widget_class_detail_title">Detalle de Clase</string>
+    <string name="widget_class_detail_desc">Información detallada e interactiva de cada clase.</string>
+    <string name="no_classes_today">No hay clases hoy</string>
+    <string name="holiday_today">¡Día Festivo!</string>
+
+    <!-- Nfc Messages -->
+    <string name="msg_waiting_tag">Esperando etiqueta NFC...</string>
+    <string name="msg_tag_detected">Tag detectado: </string>
+    <string name="msg_processing">Procesando...</string>
+    <string name="msg_success">¡Lectura y vinculación con el tag NFC exitosa!</string>
+    <string name="err_no_nfc">Error: Este dispositivo no dispone de hardware NFC.</string>
+    <string name="err_nfc_disabled">Error: El NFC está desactivado. Por favor, actívalo en los ajustes.</string>
+    <string name="err_read_fail">Error: No se pudo leer el ID de la etiqueta.</string>
+    <string name="err_python">Error en el motor de lógica (Python): </string>
+    <string name="err_unexpected">Error inesperado: </string>
 </resources>

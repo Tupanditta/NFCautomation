@@ -26,3 +26,6 @@ class SetTimer(Action):
         except Exception as e:
             logger.error(f"Error al iniciar el temporizador: {e}")
             raise e
+
+    def get_summary(self):
+        return f"Temporizador: {self.seconds}s"

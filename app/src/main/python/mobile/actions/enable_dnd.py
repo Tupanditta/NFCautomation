@@ -42,3 +42,6 @@ class EnableDnd(Action):
         except Exception as e:
             logger.error(f"Error al cambiar modo No Molestar: {e}")
             raise e
+
+    def get_summary(self):
+        return "Activar No Molestar" if self.enabled else "Desactivar No Molestar"

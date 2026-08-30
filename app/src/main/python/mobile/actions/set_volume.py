@@ -49,3 +49,6 @@ class SetVolume(Action):
 
     except Exception as e:
         logger.error(f"Error al establecer volumen de {self.stream_name}: {e}")
+
+  def get_summary(self):
+    return f"Volumen {self.stream_name.capitalize()}: {self.level}%"

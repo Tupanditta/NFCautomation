@@ -1,0 +1,257 @@
+{
+    "work_mode_ON": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": true }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 10,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "open_app",
+                "params": {
+                    "alias": "spotify"
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Trabajo: ON",
+                    "message": "Concentración activada y notificaciones silenciadas."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 1900,
+                    "on_duration": 500,
+                    "off_duration": 200
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "work_mode_started"
+                }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKIN",
+                    "mode": "WORK"
+                }
+            }
+        ],
+        "laptop_task": "work_mode_ON"
+    },
+    "work_mode_OFF": {
+        "mobile_actions": [
+            {
+                "action": "toggle_hotspot"
+            },
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "toggle_flashlight",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "desactivate_vibration"
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 60,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 50,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Trabajo: OFF",
+                    "message": "Estado normal restaurado."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 4000,
+                    "on_duration": 1000,
+                    "off_duration": 500
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "work_mode_finished"
+                }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKOUT",
+                    "mode": "WORK"
+                }
+            }
+        ],
+        "laptop_task": "work_mode_OFF"
+    },
+    "class_mode_ON": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": true }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_timer",
+                "params": {
+                    "seconds": 3000,
+                    "message": "Fin de la clase"
+                }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Clase: ON",
+                    "message": "Móvil silenciado para la lección."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 1000,
+                    "on_duration": 200,
+                    "off_duration": 200
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "class_mode_started"
+                }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKIN",
+                    "mode": "CLASS"
+                }
+            }
+        ]
+    },
+    "class_mode_OFF": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 60,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 50,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "desactivate_vibration"
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Clase: OFF",
+                    "message": "Estado normal restaurado."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 1500,
+                    "on_duration": 300,
+                    "off_duration": 200
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "class_mode_finished"
+                }
+            }
+        ]
+    },
+    "night": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": true }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "vibrate",
+                "params": { "duration": 200 }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Noche",
+                    "message": "Que descanses."
+                }
+            }
+        ]
+    },
+    "app_init_ON": {
+        "system": true,
+        "mobile_actions": []
+    },
+    "app_init_OFF": {
+        "system": true,
+        "mobile_actions": []
+    }
+}

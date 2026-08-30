@@ -26,3 +26,6 @@ class ToggleHotspot(Action):
                 context.startActivity(intent)
             except:
                 raise e
+
+    def get_summary(self):
+        return "Abrir Hotspot"

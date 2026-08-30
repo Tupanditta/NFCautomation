@@ -15,6 +15,7 @@ from mobile.actions.open_url import OpenUrl
 from mobile.actions.toggle_flashlight import ToggleFlashlight
 from mobile.actions.set_timer import SetTimer
 from mobile.actions.toggle_hotspot import ToggleHotspot
+from mobile.actions.track_time import TrackTime
 
 class ActionRegistry:
   """
@@ -40,7 +41,8 @@ class ActionRegistry:
       "text_clipboard": TextClipboard,
       "toggle_flashlight": ToggleFlashlight,
       "set_timer": SetTimer,
-      "toggle_hotspot": ToggleHotspot
+      "toggle_hotspot": ToggleHotspot,
+      "track_time": TrackTime
     }
   
   def get_action(self, action_name): 

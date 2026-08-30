@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">UPNAAA</string>
+
+    <!-- Main Menu -->
+    <string name="nfc_ready">NFC SYSTEM READY</string>
+    <string name="nfc_disabled">NFC DISABLED</string>
+    <string name="scanning">Scanning tags...</string>
+    <string name="activate_nfc">Activate to automate</string>
+    <string name="active_mode_label">CURRENT MODE</string>
+    <string name="idle">IDLE</string>
+    <string name="manual_launch">MANUAL LAUNCH</string>
+    <string name="select_automation">Select automation</string>
+    <string name="active_prefix">ACTIVE: %s</string>
+    <string name="workflow_label">Automation</string>
+
+    <!-- Settings -->
+    <string name="settings_title">SETTINGS</string>
+    <string name="tab_tags">TAGS</string>
+    <string name="tab_workflows">AUTOMATIONS</string>
+    <string name="tab_config">CONFIGURATION</string>
+
+    <!-- Config -->
+    <string name="section_system">INTERFACE &amp; SYSTEM</string>
+    <string name="notif_perm_title">Permanent Notification</string>
+    <string name="notif_perm_desc">Quick access from status bar</string>
+    <string name="dark_mode_title">Dark Mode</string>
+    <string name="dark_mode_desc">Visual appearance of the app</string>
+    <string name="section_info">INFORMATION</string>
+    <string name="version_label">Version</string>
+    <string name="developer_label">Developer</string>
+    <string name="designed_by">DESIGNED BY %s</string>
+    <string name="language_label">Language</string>
+    <string name="lang_es">Spanish</string>
+    <string name="lang_en">English</string>
+    <string name="lang_eu">Basque</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_save">SAVE</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="dialog_back">BACK</string>
+    <string name="dialog_delete_title">Delete Security</string>
+    <string name="dialog_delete_msg">Are you sure you want to delete \'%s\'? This action cannot be undone.</string>
+    <string name="dialog_delete_confirm">DELETE PERMANENTLY</string>
+    <string name="dialog_password">Password</string>
+    <string name="dialog_new_tag_title">Register New Tag</string>
+    <string name="dialog_new_tag_msg">Bring the NFC tag near the phone...</string>
+    <string name="dialog_assign_title">Assign Automation</string>
+    <string name="dialog_create_new">➕ CREATE NEW...</string>
+    <string name="dialog_new_wf_title">New Automation</string>
+    <string name="dialog_wf_name">Workflow Name</string>
+    <string name="dialog_create_assign">CREATE &amp; ASSIGN</string>
+    <string name="dialog_rename_title">Rename Automation</string>
+    <string name="dialog_id_technical">Technical ID</string>
+    <string name="dialog_is_mode">Configure as Mode (Toggle ON/OFF)</string>
+    <string name="label_mode">MODE</string>
+    <string name="label_mode_toggle">MODE (ON/OFF)</string>
+
+    <!-- Editor -->
+    <string name="edit_prefix">EDIT: %s</string>
+    <string name="add_action">Add Action</string>
+    <string name="actions_config_count">%d actions configured</string>
+
+    <!-- Execution -->
+    <string name="execution_title">EXECUTION</string>
+    <string name="issues_detected">ISSUES DETECTED</string>
+    <string name="deactivate_mode">DEACTIVATE MODE</string>
+    <string name="reactivate_mode">REACTIVE AGAIN</string>
+    <string name="back_to_start">BACK TO START</string>
+    <string name="unknown_target">UNKNOWN</string>
+    <string name="actions_performed">ACTIONS PERFORMED</string>
+    <string name="class_registered">CLASS REGISTERED</string>
+    <string name="unmark_attendance">Mark as not attended</string>
+
+    <!-- Attendance & Schedule -->
+    <string name="attendance_title">ATTENDANCE</string>
+    <string name="schedule_title">CLASS SCHEDULE</string>
+    <string name="filter_day">TODAY</string>
+    <string name="filter_week">WEEK</string>
+    <string name="filter_month">MONTH</string>
+    <string name="attended_label">ATTENDED</string>
+    <string name="missed_label">MISSED</string>
+    <string name="upcoming_label">UPCOMING</string>
+    <string name="all_label">ALL</string>
+    <string name="attendance_rate">Attendance Rate</string>
+    <string name="no_records">No classes recorded in this period</string>
+    <string name="status_attended">Attended</string>
+    <string name="status_missed">Missed</string>
+    <string name="status_upcoming">Upcoming</string>
+    <string name="edit_schedule">EDIT SCHEDULE</string>
+    <string name="add_class">Add Class</string>
+    <string name="subject_label">Subject</string>
+    <string name="start_time_label">Start</string>
+    <string name="end_time_label">End</string>
+    <string name="room_label">Room</string>
+    <string name="floor_label">Floor</string>
+    <string name="building_label">Building</string>
+    <string name="save_schedule">SAVE SCHEDULE</string>
+    <string name="enter_password">Enter password to edit</string>
+    <string name="semester_q1">1st Semester</string>
+    <string name="semester_q2">2nd Semester</string>
+    <string name="modify_day">MODIFY DAY</string>
+    <string name="restore_base">RESTORE BASE</string>
+    <string name="exception_notice">Schedule modified for this day</string>
+    <string name="select_date">Select school day</string>
+    <string name="edit_day_title">Edit: %s</string>
+    <string name="class_name_hint">Subject name</string>
+    <string name="add_class_short">Add</string>
+    <string name="session_theory">THEORY</string>
+    <string name="session_practice">PRACTICE</string>
+    <string name="session_type_label">Session Type</string>
+
+    <!-- Export -->
+    <string name="export_title">EXPORT REPORT</string>
+    <string name="export_desc">Choose the period to generate the Excel file (.xlsx)</string>
+    <string name="export_week">Current Week</string>
+    <string name="export_month">Current Month</string>
+    <string name="export_semester">Semester (%s)</string>
+    <string name="export_year">Full Academic Year</string>
+    <string name="exporting_msg">Generating file...</string>
+    <string name="export_success">Report generated successfully</string>
+    <string name="export_error">Error exporting report: %s</string>
+
+    <!-- Widgets -->
+    <string name="widget_daily_list_title">Daily Class List</string>
+    <string name="widget_daily_list_desc">Shows today subjects and times.</string>
+    <string name="widget_class_detail_title">Class Detail</string>
+    <string name="widget_class_detail_desc">Detailed and interactive info for each class.</string>
+    <string name="no_classes_today">No classes today</string>
+    <string name="holiday_today">Holiday!</string>
+
+    <!-- Nfc Messages -->
+    <string name="msg_waiting_tag">Waiting for NFC tag...</string>
+    <string name="msg_tag_detected">Tag detected: </string>
+    <string name="msg_processing">Processing...</string>
+    <string name="msg_success">NFC tag linked successfully!</string>
+    <string name="err_no_nfc">Error: Device does not have NFC hardware.</string>
+    <string name="err_nfc_disabled">Error: NFC is disabled. Please enable it in settings.</string>
+    <string name="err_read_fail">Error: Could not read tag ID.</string>
+    <string name="err_python">Logic engine error (Python): </string>
+    <string name="err_unexpected">Unexpected error: </string>
+</resources>

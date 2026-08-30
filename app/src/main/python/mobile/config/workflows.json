@@ -29,7 +29,7 @@
                 "action": "show_notification",
                 "params": {
                     "title": "Modo Trabajo: ON",
-                    "message": "Concentración activada, brillo ajustado y notificaciones silenciadas."
+                    "message": "Concentración activada y notificaciones silenciadas."
                 }
             },
             {
@@ -103,17 +103,11 @@
         ],
         "laptop_task": "work_mode_OFF"
     },
-    "class_mode_log": {
+    "class_mode_ON": {
         "mobile_actions": [
             {
-                "action": "set_timer",
-                "params": {
-                    "seconds": 3000,
-                    "message": "Fin de la clase"
-                }
-            },
-            {
-                "action": "toggle_hotspot"
+                "action": "enable_dnd",
+                "params": { "enabled": true }
             },
             {
                 "action": "set_volume",
@@ -130,10 +124,17 @@
                 }
             },
             {
+                "action": "set_timer",
+                "params": {
+                    "seconds": 3000,
+                    "message": "Fin de la clase"
+                }
+            },
+            {
                 "action": "show_notification",
                 "params": {
-                    "title": "Modo Clase",
-                    "message": "Temporizador de 50 min activo y móvil silenciado."
+                    "title": "Modo Clase: ON",
+                    "message": "Móvil silenciado para la lección."
                 }
             },
             {
@@ -147,10 +148,89 @@
             {
                 "action": "log_event",
                 "params": {
-                    "event_name": "class_mode_log"
+                    "event_name": "class_mode_started"
                 }
             }
-        ],
-        "laptop_task": "class_mode_log"
+        ]
+    },
+    "class_mode_OFF": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": false }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 60,
+                    "stream": "music"
+                }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 50,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "desactivate_vibration"
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Clase: OFF",
+                    "message": "Estado normal restaurado."
+                }
+            },
+            {
+                "action": "activate_vibration",
+                "params": {
+                    "total_duration": 1500,
+                    "on_duration": 300,
+                    "off_duration": 200
+                }
+            },
+            {
+                "action": "log_event",
+                "params": {
+                    "event_name": "class_mode_finished"
+                }
+            }
+        ]
+    },
+    "night": {
+        "mobile_actions": [
+            {
+                "action": "enable_dnd",
+                "params": { "enabled": true }
+            },
+            {
+                "action": "set_volume",
+                "params": {
+                    "level": 0,
+                    "stream": "notification"
+                }
+            },
+            {
+                "action": "vibrate",
+                "params": { "duration": 200 }
+            },
+            {
+                "action": "show_notification",
+                "params": {
+                    "title": "Modo Noche",
+                    "message": "Que descanses."
+                }
+            }
+        ]
+    },
+    "app_init_ON": {
+        "system": true,
+        "mobile_actions": []
+    },
+    "app_init_OFF": {
+        "system": true,
+        "mobile_actions": []
     }
 }

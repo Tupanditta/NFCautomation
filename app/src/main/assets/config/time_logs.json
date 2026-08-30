@@ -1,0 +1,730 @@
+[
+    {
+        "timestamp": "2026-08-20 08:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-08-21 07:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-02 07:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-03 09:59:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-07 07:56:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-08 08:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-09 08:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-10 10:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-15 09:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-16 08:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-17 10:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-18 09:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-21 07:57:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-22 09:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-23 08:01:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-24 10:01:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-25 08:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-29 09:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-09-30 08:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-01 09:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-02 08:56:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-05 07:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-06 09:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-07 07:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-08 10:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-09 08:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-14 08:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-16 08:59:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-20 09:03:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-21 07:57:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-22 09:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-23 08:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-26 08:01:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-27 09:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-29 09:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-10-30 08:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-03 09:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-04 08:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-05 10:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-09 08:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-11 08:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-12 10:09:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-13 09:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-16 08:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-17 08:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-18 08:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-19 10:02:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-20 09:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-23 08:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-24 09:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-25 08:03:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-26 10:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-11-27 09:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-12-01 09:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Programación",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-12-02 07:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-12-04 08:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-12-07 07:59:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2026-12-10 10:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Matemáticas",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-01-27 08:26:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-01-28 09:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-01-29 10:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-01 08:29:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-03 08:26:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-04 08:59:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-05 09:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-08 08:31:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-09 10:56:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-11 09:07:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-12 10:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-15 08:27:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-16 10:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-17 08:26:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-18 09:09:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-19 10:03:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-22 08:35:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-24 08:36:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-25 08:56:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-02-26 10:09:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-01 08:37:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-02 11:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-05 10:04:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-08 08:32:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-09 11:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-10 08:39:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-11 09:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-12 09:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-15 08:38:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-16 11:00:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-17 08:33:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-18 09:06:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-23 10:58:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-03-24 08:33:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-05 08:28:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-06 11:03:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-07 08:27:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-08 08:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-09 10:10:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-12 08:27:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-14 08:28:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-15 09:08:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Física II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-16 10:05:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Ética Profesional",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-12 08:35:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Álgebra II",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-20 10:55:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Sistemas Operativos",
+        "source": "SIMULATION"
+    },
+    {
+        "timestamp": "2027-04-21 08:27:00",
+        "mode": "CLASS",
+        "event": "CHECKIN",
+        "details": "Estructuras de Datos",
+        "source": "SIMULATION"
+    }
+]

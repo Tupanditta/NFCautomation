@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.chaquopy)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -38,15 +39,25 @@ android {
 }
 chaquopy {
     defaultConfig {
-        version = "3.11"
+        version = "3.13"
         buildPython("C:/Users/ander/AppData/Local/Programs/Python/Python313/python.exe")
+        pip {
+            install("openpyxl")
+            install("fpdf2")
+        }
     }
 }
 
 dependencies {
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.activity:activity-ktx:1.9.0")
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.androidx.glance.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
