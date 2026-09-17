@@ -45,6 +45,13 @@
                 "params": {
                     "event_name": "work_mode_started"
                 }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKIN",
+                    "mode": "WORK"
+                }
             }
         ],
         "laptop_task": "work_mode_ON"
@@ -99,6 +106,13 @@
                 "params": {
                     "event_name": "work_mode_finished"
                 }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKOUT",
+                    "mode": "WORK"
+                }
             }
         ],
         "laptop_task": "work_mode_OFF"
@@ -124,11 +138,7 @@
                 }
             },
             {
-                "action": "set_timer",
-                "params": {
-                    "seconds": 3000,
-                    "message": "Fin de la clase"
-                }
+                "action": "open_timer"
             },
             {
                 "action": "show_notification",
@@ -149,6 +159,13 @@
                 "action": "log_event",
                 "params": {
                     "event_name": "class_mode_started"
+                }
+            },
+            {
+                "action": "track_time",
+                "params": {
+                    "event_type": "CHECKIN",
+                    "mode": "CLASS"
                 }
             }
         ]

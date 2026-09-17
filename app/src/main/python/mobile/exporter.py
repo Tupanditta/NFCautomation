@@ -12,14 +12,13 @@ def generate_attendance_report(config_dir, cache_dir, period_type="MONTH", semes
     Genera un informe detallado en Excel (.xlsx) con 3 hojas.
     """
     try:
-        # SIMULACIÓN: Forzamos fecha de hoy para el reporte
-        now_sim = datetime(2027, 4, 12, 10, 0, 0)
+        now = datetime.now()
         
         # 1. Resolver semestre si es AUTO
         if semester == "AUTO":
             calendar = get_calendar_config(config_dir)
             from mobile.attendance import get_semester_for_date
-            semester = get_semester_for_date(now_sim, calendar) or "q1"
+            semester = get_semester_for_date(now, calendar) or "q1"
 
         # 2. Obtener datos según el periodo
         data = get_attendance_summary(config_dir, period_type, semester, "ALL")
@@ -56,7 +55,7 @@ def generate_attendance_report(config_dir, cache_dir, period_type="MONTH", semes
         ws1["A1"].alignment = center_align
         
         ws1["A2"] = f"Periodo: {period_type} | Cuatrimestre: {semester.upper()}"
-        ws1["A3"] = f"Generado el: {now_sim.strftime('%d/%m/%Y %H:%M:%S')}"
+        ws1["A3"] = f"Generado el: {now.strftime('%d/%m/%Y %H:%M:%S')}"
         
         # Estadísticas Globales
         ws1.append([])
@@ -75,27 +74,33 @@ def generate_attendance_report(config_dir, cache_dir, period_type="MONTH", semes
         # Agrupar y obtener aula/piso/edificio
         subj_data = {}
         for r in records:
-            if r.get("status") == "HOLIDAY": continue
+            if r.get("status") in ["HOLIDAY", "WEEKEND", "FREE"]: continue
             s = r["subject"]
             t = r.get("type", "THEORY")
             key = (s, t)
-            if key not in subj_data: subj_data[key] = {"total": 0, "att": 0, "miss": 0}
+            if key not in subj_data:
+                subj_data[key] = {
+                    "total": 0, "att": 0, "miss": 0,
+                    "rooms": set(), "floors": set(), "buildings": set()
+                }
             subj_data[key]["total"] += 1
             if r["status"] == "ATTENDED": subj_data[key]["att"] += 1
             elif r["status"] == "MISSED": subj_data[key]["miss"] += 1
 
-        sched_q1 = get_schedule(config_dir, "q1")
-        sched_q2 = get_schedule(config_dir, "q2")
-        all_classes = []
-        for d in sched_q1.values(): all_classes.extend(d)
-        for d in sched_q2.values(): all_classes.extend(d)
-        room_map = {c["subject"]: (c.get("room", "-"), c.get("floor", "-"), c.get("building", "-")) for c in all_classes}
+            rm = r.get("room")
+            if rm and rm != "-": subj_data[key]["rooms"].add(rm)
+            fl = r.get("floor")
+            if fl and fl != "-": subj_data[key]["floors"].add(fl)
+            bg = r.get("building")
+            if bg and bg != "-": subj_data[key]["buildings"].add(bg)
 
         row_count = 0
         for (s, t), info in sorted(subj_data.items()):
             total_fin = info["att"] + info["miss"]
             perc = f"{round((info['att'] / total_fin * 100), 1) if total_fin > 0 else 0}%"
-            room, floor, building = room_map.get(s, ("-", "-", "-"))
+            room = " / ".join(sorted(info["rooms"])) if info["rooms"] else "-"
+            floor = " / ".join(sorted(info["floors"])) if info["floors"] else "-"
+            building = " / ".join(sorted(info["buildings"])) if info["buildings"] else "-"
             type_label = "TEORÍA" if t == "THEORY" else "PRÁCTICA"
             
             ws1.append([s, type_label, room, floor, building, info["total"], info["att"], info["miss"], perc])

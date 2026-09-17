@@ -77,6 +77,27 @@ def get_dispatcher():
             tags_dict = load_tags(tags_path)
             workflows_dict = load_workflows(workflows_path)
 
+            # HOTPATCH: Sanear y actualizar workflows obsoletos
+            for wf_id in workflows_dict:
+                if "mobile_actions" in workflows_dict[wf_id]:
+                    actions = workflows_dict[wf_id]["mobile_actions"]
+                    
+                    # 1. Eliminar la acción obsoleta 'set_timer'
+                    new_actions = [a for a in actions if a.get("action") != "set_timer"]
+                    
+                    # 2. Asegurar que 'track_time' existe en los modos principales si no está
+                    has_track = any(a.get("action") == "track_time" for a in new_actions)
+                    
+                    if not has_track:
+                        if wf_id == "class_mode_ON":
+                            new_actions.append({"action": "track_time", "params": {"event_type": "CHECKIN", "mode": "CLASS"}})
+                        elif wf_id == "work_mode_ON":
+                            new_actions.append({"action": "track_time", "params": {"event_type": "CHECKIN", "mode": "WORK"}})
+                        elif wf_id == "work_mode_OFF":
+                            new_actions.append({"action": "track_time", "params": {"event_type": "CHECKOUT", "mode": "WORK"}})
+                    
+                    workflows_dict[wf_id]["mobile_actions"] = new_actions
+
             _dispatcher_instance = Dispatcher(
                 TagRegistry(tags_dict),
                 WorkFlowRegistry(workflows_dict),
@@ -491,11 +512,11 @@ def check_academic_day(date_str: str):
     except Exception:
         return False
 
-def toggle_attendance(date_str: str, subject: str, current_status: str):
+def toggle_attendance(date_str: str, subject: str, start_time: str, current_status: str):
     """Cambia el estado de asistencia manualmente."""
     try:
         config_dir = _BASE_CONFIG_PATH or os.path.join(os.path.dirname(__file__), "mobile", "config")
-        _toggle_attendance(config_dir, date_str, subject, current_status)
+        _toggle_attendance(config_dir, date_str, subject, start_time, current_status)
         return json.dumps({"success": True})
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -516,4 +537,18 @@ def export_attendance_excel(period_type: str, semester: str = "q1", format: str 
     except Exception as e:
         import traceback
         logging.error(traceback.format_exc())
+        return json.dumps({"error": str(e)})
+
+# --- Funciones de Campus ---
+
+def get_campus_config():
+    """Retorna la configuración de edificios del campus."""
+    try:
+        config_dir = _BASE_CONFIG_PATH or os.path.join(os.path.dirname(__file__), "mobile", "config")
+        campus_path = os.path.join(config_dir, "campus_config.json")
+        if os.path.exists(campus_path):
+            with open(campus_path, "r", encoding="utf-8") as f:
+                return json.dumps(json.load(f))
+        return json.dumps({"buildings": []})
+    except Exception as e:
         return json.dumps({"error": str(e)})

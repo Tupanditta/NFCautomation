@@ -40,6 +40,8 @@
     <string name="dialog_back">BACK</string>
     <string name="dialog_delete_title">Delete Security</string>
     <string name="dialog_delete_msg">Are you sure you want to delete \'%s\'? This action cannot be undone.</string>
+    <string name="dialog_delete_tag_title">Delete Tag</string>
+    <string name="dialog_delete_tag_msg">Are you sure you want to delete this tag? You will have to scan it again if you want to use it later.</string>
     <string name="dialog_delete_confirm">DELETE PERMANENTLY</string>
     <string name="dialog_password">Password</string>
     <string name="dialog_new_tag_title">Register New Tag</string>
@@ -86,6 +88,7 @@
     <string name="status_attended">Attended</string>
     <string name="status_missed">Missed</string>
     <string name="status_upcoming">Upcoming</string>
+    <string name="status_weekend">Weekend</string>
     <string name="edit_schedule">EDIT SCHEDULE</string>
     <string name="add_class">Add Class</string>
     <string name="subject_label">Subject</string>
@@ -107,7 +110,10 @@
     <string name="add_class_short">Add</string>
     <string name="session_theory">THEORY</string>
     <string name="session_practice">PRACTICE</string>
+    <string name="session_event">EVENT</string>
     <string name="session_type_label">Session Type</string>
+    <string name="event_title_label">Event Title</string>
+    <string name="event_title_hint">e.g. Conference, Sport...</string>
 
     <!-- Export -->
     <string name="export_title">EXPORT REPORT</string>
@@ -138,4 +144,8 @@
     <string name="err_read_fail">Error: Could not read tag ID.</string>
     <string name="err_python">Logic engine error (Python): </string>
     <string name="err_unexpected">Unexpected error: </string>
+
+    <!-- Campus Map -->
+    <string name="campus_map_title">CAMPUS MAP</string>
+    <string name="all_campus_buildings">ALL CAMPUS BUILDINGS</string>
 </resources>

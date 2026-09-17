@@ -1,23 +1,6 @@
 {
-    "lunes": [
-        {
-            "start": "08:00",
-            "end": "10:00",
-            "subject": "Matemáticas"
-        },
-        {
-            "start": "10:00",
-            "end": "12:00",
-            "subject": "Física"
-        }
-    ],
-    "martes": [
-        {
-            "start": "09:00",
-            "end": "11:00",
-            "subject": "Programación"
-        }
-    ],
+    "lunes": [],
+    "martes": [],
     "miercoles": [],
     "jueves": [],
     "viernes": [],

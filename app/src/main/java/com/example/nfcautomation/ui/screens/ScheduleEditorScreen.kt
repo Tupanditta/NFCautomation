@@ -60,7 +60,9 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
     } else {
         val schedule = viewModel.scheduleData?.toMutableMap() ?: mutableMapOf()
         val currentDay = days[selectedTabIndex]
-        val classes = schedule[currentDay]?.jsonArray?.toMutableList() ?: mutableListOf()
+        val rawClasses = schedule[currentDay]?.jsonArray?.toList() ?: emptyList()
+        // Ordenar por hora de inicio para visualización
+        val classes = rawClasses.sortedBy { it.jsonObject["start"]?.jsonPrimitive?.content ?: "00:00" }.toMutableList()
 
         var showAddDialog by remember { mutableStateOf(false) }
         var editingIndex by remember { mutableStateOf<Int?>(null) }
@@ -105,12 +107,20 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
                 Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(
                         selected = viewModel.currentSemester == "q1",
-                        onClick = { viewModel.currentSemester = "q1" },
+                        onClick = { 
+                            if (viewModel.currentSemester != "q1") {
+                                viewModel.currentSemester = "q1" 
+                            }
+                        },
                         label = { Text("Q1") }
                     )
                     FilterChip(
                         selected = viewModel.currentSemester == "q2",
-                        onClick = { viewModel.currentSemester = "q2" },
+                        onClick = { 
+                            if (viewModel.currentSemester != "q2") {
+                                viewModel.currentSemester = "q2" 
+                            }
+                        },
                         label = { Text("Q2") }
                     )
                 }
@@ -161,7 +171,7 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
                                     IconButton(onClick = { 
                                         classes.removeAt(index)
                                         schedule[currentDay] = JsonArray(classes)
-                                        viewModel.scheduleData = JsonObject(schedule)
+                                        viewModel.updateWorkingSchedule(JsonObject(schedule))
                                     }) {
                                         Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error)
                                     }
@@ -195,24 +205,6 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
                         put("type", sessionType)
                     }
                     
-                    // --- Lógica de Propagación de Localización ---
-                    schedule.forEach { (day, classList) ->
-                        val updatedList = classList.jsonArray.map { 
-                            if (it.jsonObject["subject"]?.jsonPrimitive?.content == subject) {
-                                val updatedClass = it.jsonObject.toMutableMap().apply {
-                                    put("room", JsonPrimitive(room))
-                                    put("floor", JsonPrimitive(floor))
-                                    put("building", JsonPrimitive(building))
-                                    // NO propagamos sessionType para permitir Teoría/Práctica en distintos días
-                                }
-                                JsonObject(updatedClass)
-                            } else {
-                                it.jsonObject
-                            }
-                        }
-                        schedule[day] = JsonArray(updatedList)
-                    }
-
                     if (editingIndex != null) {
                         classes[editingIndex!!] = newClass
                     } else {
@@ -220,7 +212,7 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
                     }
                     
                     schedule[currentDay] = JsonArray(classes)
-                    viewModel.scheduleData = JsonObject(schedule)
+                    viewModel.updateWorkingSchedule(JsonObject(schedule))
                     showAddDialog = false
                     editingIndex = null
                 },
@@ -230,6 +222,7 @@ fun ScheduleEditorScreen(viewModel: MainViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClassEditDialog(
     initialSubject: String,
@@ -262,7 +255,7 @@ fun ClassEditDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
                 
-                // --- Selector de Tipo de Sesión ---
+                // ... (session type chips)
                 Row(
                     modifier = Modifier.padding(top = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -323,6 +316,7 @@ fun ClassEditDialog(
                         modifier = Modifier.weight(1f)
                     )
                 }
+                
                 OutlinedTextField(
                     value = building,
                     onValueChange = { building = it },

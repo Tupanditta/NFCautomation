@@ -163,6 +163,8 @@ class Dispatcher:
             action_name = action_def.get("action")
             params = action_def.get("params", {})
             
+            logger.info(f"→ Ejecutando: {action_name}")
+            
             try:
                 action_class = self.action_registry.get_action(action_name)
                 if action_class is None:
@@ -182,7 +184,8 @@ class Dispatcher:
                 if isinstance(action, TrackTime) and action.detected_class:
                     attendance_info = {
                         "subject": action.detected_class,
-                        "date": datetime.now().strftime("%Y-%m-%d")
+                        "date": datetime.now().strftime("%Y-%m-%d"),
+                        "startTime": action.detected_start_time
                     }
 
             except MobileBaseError as e:

@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.nfcautomation"
-    compileSdk = 37
+    compileSdk = libs.versions.sdk.compile.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.nfcautomation"
-        minSdk = 34
-        targetSdk = 37
+        minSdk = libs.versions.sdk.min.get().toInt()
+        targetSdk = libs.versions.sdk.target.get().toInt()
         versionCode = 1
         versionName = "1.0"
 

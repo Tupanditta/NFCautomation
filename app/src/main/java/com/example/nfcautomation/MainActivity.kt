@@ -26,11 +26,13 @@ import com.example.nfcautomation.ui.screens.ManagementScreen
 import com.example.nfcautomation.ui.screens.MenuScreen
 import com.example.nfcautomation.ui.screens.AttendanceScreen
 import com.example.nfcautomation.ui.screens.ScheduleEditorScreen
+import com.example.nfcautomation.ui.screens.CampusMapScreen
 import com.example.nfcautomation.ui.theme.NFCAutomationTheme
 import com.example.nfcautomation.ui.viewmodel.MainViewModel
 import com.example.nfcautomation.ui.viewmodel.ManagementViewModel
 import com.example.nfcautomation.ui.viewmodel.Screen
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.content.FileProvider
 import java.io.File
@@ -68,6 +70,7 @@ class MainActivity : ComponentActivity(), NfcAdapter.ReaderCallback {
             val bridge = py.getModule("bridge")
             bridge.callAttr("setup_base_path", configPath)
             viewModel.refreshState()
+            viewModel.fetchCampusData()
             
             // 3. Aplicar Idioma INMEDIATAMENTE (antes de setContent)
             applyLocale(viewModel.currentLanguage)
@@ -112,6 +115,12 @@ class MainActivity : ComponentActivity(), NfcAdapter.ReaderCallback {
             }
 
             NFCAutomationTheme(darkMode = viewModel.isDarkMode) {
+                // Manejo del botón atrás del sistema:
+                // Si no estamos en el menú, volvemos al menú. Si estamos en el menú, salimos (comportamiento por defecto).
+                BackHandler(enabled = viewModel.currentScreen != Screen.MENU) {
+                    viewModel.currentScreen = Screen.MENU
+                }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -122,6 +131,7 @@ class MainActivity : ComponentActivity(), NfcAdapter.ReaderCallback {
                         Screen.MANAGEMENT -> ManagementScreen(managementViewModel, onBack = { viewModel.currentScreen = Screen.MENU })
                         Screen.ATTENDANCE -> AttendanceScreen(viewModel)
                         Screen.SCHEDULE_EDITOR -> ScheduleEditorScreen(viewModel)
+                        Screen.CAMPUS_MAP -> CampusMapScreen(viewModel)
                     }
                 }
             }

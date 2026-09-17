@@ -115,7 +115,7 @@ fun ExecutionScreen(viewModel: MainViewModel) {
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         OutlinedButton(
-                            onClick = { viewModel.toggleAttendance(info.date, info.subject, "ATTENDED") },
+                            onClick = { viewModel.toggleAttendance(info.date, info.subject, info.startTime, "ATTENDED") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
                         ) {
@@ -148,6 +148,34 @@ fun ExecutionScreen(viewModel: MainViewModel) {
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(text = action, style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+
+            // --- DETALLES DE EJECUCIÓN (LOGS) ---
+            if (!result.details.isNullOrBlank()) {
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = stringResource(R.string.execution_details),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        result.details.split("\n").forEach { line ->
+                            if (line.isNotBlank()) {
+                                Text(
+                                    text = line,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     }
                 }
             }

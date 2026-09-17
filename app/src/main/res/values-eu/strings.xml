@@ -40,6 +40,8 @@
     <string name="dialog_back">ATZERA</string>
     <string name="dialog_delete_title">Ezabatzeko Segurtasuna</string>
     <string name="dialog_delete_msg">Ziur zaude \'%s\' ezabatu nahi duzula? Ekintza hau ezin da desegin.</string>
+    <string name="dialog_delete_tag_title">Etiketa Ezabatu</string>
+    <string name="dialog_delete_tag_msg">Ziur zaude etiketa hau ezabatu nahi duzula? Berriro eskaneatu beharko duzu beranduago erabili nahi baduzu.</string>
     <string name="dialog_delete_confirm">EZABATU BETIKO</string>
     <string name="dialog_password">Pasahitza</string>
     <string name="dialog_new_tag_title">Etiketa Berria Erregistratu</string>
@@ -86,6 +88,7 @@
     <string name="status_attended">Bertaratua</string>
     <string name="status_missed">Hutsegina</string>
     <string name="status_upcoming">Zain</string>
+    <string name="status_weekend">Asteburua</string>
     <string name="edit_schedule">ORDUTEGIA EDITATU</string>
     <string name="add_class">Klasea Gehitu</string>
     <string name="subject_label">Ikasgaia</string>
@@ -107,7 +110,10 @@
     <string name="add_class_short">Gehitu</string>
     <string name="session_theory">TEORIA</string>
     <string name="session_practice">PRAKTIKA</string>
+    <string name="session_event">EKITALDIA</string>
     <string name="session_type_label">Saio Mota</string>
+    <string name="event_title_label">Ekitaldiaren Izena</string>
+    <string name="event_title_hint">Adibidez: Hitzaldia, Kirola...</string>
 
     <!-- Esportazioa -->
     <string name="export_title">INFORMEA ESPORTATU</string>
@@ -138,4 +144,8 @@
     <string name="err_read_fail">Errorea: Ezin izan da etiketaren IDa irakurri.</string>
     <string name="err_python">Logika motorraren errorea (Python): </string>
     <string name="err_unexpected">Ustekabeko errorea: </string>
+
+    <!-- Campus Map -->
+    <string name="campus_map_title">CAMPUS MAPA</string>
+    <string name="all_campus_buildings">CAMPUS-EKO ERAIKIN GUZTIAK</string>
 </resources>

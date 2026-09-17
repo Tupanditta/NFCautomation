@@ -13,7 +13,8 @@ from mobile.actions.text_clipboard import TextClipboard
 from mobile.actions.open_url import OpenUrl
 # Nuevas acciones
 from mobile.actions.toggle_flashlight import ToggleFlashlight
-from mobile.actions.set_timer import SetTimer
+from mobile.actions.open_timer import OpenTimer
+from mobile.actions.open_alarm import OpenAlarm
 from mobile.actions.toggle_hotspot import ToggleHotspot
 from mobile.actions.track_time import TrackTime
 
@@ -40,7 +41,8 @@ class ActionRegistry:
       "desactivate_vibration": DesactivateVibration,
       "text_clipboard": TextClipboard,
       "toggle_flashlight": ToggleFlashlight,
-      "set_timer": SetTimer,
+      "open_timer": OpenTimer,
+      "open_alarm": OpenAlarm,
       "toggle_hotspot": ToggleHotspot,
       "track_time": TrackTime
     }

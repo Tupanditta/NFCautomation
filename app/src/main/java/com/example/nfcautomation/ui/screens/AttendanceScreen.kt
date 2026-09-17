@@ -15,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -76,8 +77,9 @@ fun AttendanceScreen(viewModel: MainViewModel) {
                             Text(
                                 text = when(viewModel.selectedTimeFilter) {
                                     "DAY" -> stringResource(R.string.filter_day)
-                                    "WEEK" -> stringResource(R.string.filter_week)
-                                    else -> stringResource(R.string.filter_month)
+                                    "MONTH" -> stringResource(R.string.filter_month)
+                                    "YEAR" -> stringResource(R.string.filter_year)
+                                    else -> stringResource(R.string.filter_week)
                                 },
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Bold
@@ -85,17 +87,36 @@ fun AttendanceScreen(viewModel: MainViewModel) {
                         }
                     }
                     DropdownMenu(expanded = viewModel.timeMenuExpanded, onDismissRequest = { viewModel.timeMenuExpanded = false }) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.filter_day)) }, onClick = { viewModel.selectedTimeFilter = "DAY"; viewModel.timeMenuExpanded = false })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.filter_week)) }, onClick = { viewModel.selectedTimeFilter = "WEEK"; viewModel.timeMenuExpanded = false })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.filter_month)) }, onClick = { viewModel.selectedTimeFilter = "MONTH"; viewModel.timeMenuExpanded = false })
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.filter_today)) }, 
+                            onClick = { 
+                                viewModel.resetToToday()
+                                viewModel.timeMenuExpanded = false 
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.filter_day)) }, 
+                            onClick = { 
+                                viewModel.changeTimeFilter("DAY")
+                                viewModel.timeMenuExpanded = false 
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.filter_month)) }, 
+                            onClick = { 
+                                viewModel.changeTimeFilter("MONTH")
+                                viewModel.timeMenuExpanded = false 
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.filter_year)) }, 
+                            onClick = { 
+                                viewModel.changeTimeFilter("YEAR")
+                                viewModel.timeMenuExpanded = false 
+                            }
+                        )
                     }
                 }
-                
-                Spacer(Modifier.width(12.dp))
-                
-                FilterChip(selected = viewModel.currentSemester == "q1", onClick = { viewModel.jumpToSemester("q1") }, label = { Text("Q1") })
-                Spacer(Modifier.width(4.dp))
-                FilterChip(selected = viewModel.currentSemester == "q2", onClick = { viewModel.jumpToSemester("q2") }, label = { Text("Q2") })
             }
 
             // --- NAVEGADOR TEMPORAL (Flechas) ---
@@ -172,7 +193,7 @@ fun AttendanceScreen(viewModel: MainViewModel) {
 
 @Composable
 fun TimeNavigationHeader(viewModel: MainViewModel, onLabelClick: () -> Unit) {
-    val formatter = remember { DateTimeFormatter.ofPattern("dd MMMM yyyy") }
+    val formatter = remember { DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy") }
     val monthFormatter = remember { DateTimeFormatter.ofPattern("MMMM yyyy") }
     
     val displayText = when (viewModel.selectedTimeFilter) {
@@ -183,8 +204,11 @@ fun TimeNavigationHeader(viewModel: MainViewModel, onLabelClick: () -> Unit) {
             "${start.dayOfMonth} - ${end.dayOfMonth} ${end.format(DateTimeFormatter.ofPattern("MMM"))}"
         }
         "MONTH" -> viewModel.anchorDate.format(monthFormatter).uppercase()
+        "YEAR" -> stringResource(R.string.export_year) // Reusamos el string que ya existe para año completo
         else -> ""
     }
+
+    val showArrows = viewModel.selectedTimeFilter != "YEAR"
 
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
@@ -196,8 +220,12 @@ fun TimeNavigationHeader(viewModel: MainViewModel, onLabelClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { viewModel.navigateTime(false) }) {
-                Icon(Icons.Default.ChevronLeft, null, tint = MaterialTheme.colorScheme.primary)
+            if (showArrows) {
+                IconButton(onClick = { viewModel.navigateTime(false) }) {
+                    Icon(Icons.Default.ChevronLeft, null, tint = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                Spacer(Modifier.width(48.dp))
             }
             
             Text(
@@ -205,11 +233,15 @@ fun TimeNavigationHeader(viewModel: MainViewModel, onLabelClick: () -> Unit) {
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Black,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.clickable { onLabelClick() }
+                modifier = Modifier.clickable { if (showArrows) onLabelClick() }
             )
             
-            IconButton(onClick = { viewModel.navigateTime(true) }) {
-                Icon(Icons.Default.ChevronRight, null, tint = MaterialTheme.colorScheme.primary)
+            if (showArrows) {
+                IconButton(onClick = { viewModel.navigateTime(true) }) {
+                    Icon(Icons.Default.ChevronRight, null, tint = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                Spacer(Modifier.width(48.dp))
             }
         }
     }
@@ -219,13 +251,7 @@ fun TimeNavigationHeader(viewModel: MainViewModel, onLabelClick: () -> Unit) {
 @Composable
 fun AcademicDatePicker(viewModel: MainViewModel, onDateSelected: (String) -> Unit, onDismiss: () -> Unit) {
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = viewModel.anchorDate.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli(),
-        selectableDates = object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                val date = Instant.ofEpochMilli(utcTimeMillis).atZone(ZoneId.of("UTC")).toLocalDate()
-                return viewModel.isAcademicDay(date.toString())
-            }
-        }
+        initialSelectedDateMillis = viewModel.anchorDate.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
     )
 
     DatePickerDialog(
@@ -265,59 +291,117 @@ fun DailyExceptionDialog(date: String, viewModel: MainViewModel, onDismiss: () -
                 
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.weight(1f, fill = false)) {
                     itemsIndexed(tempSchedule) { index, item ->
-                        Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))) {
+                        val isDeleted = item["deleted"]?.jsonPrimitive?.booleanOrNull ?: false
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (isDeleted) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f)
+                                                else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                            ),
+                            modifier = Modifier.alpha(if (isDeleted) 0.6f else 1f)
+                        ) {
                             Column(Modifier.padding(12.dp)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    // SELECTOR DE ASIGNATURA
-                                    var expanded by remember { mutableStateOf(false) }
+                                    // SELECTOR DE ASIGNATURA O TÍTULO DE EVENTO
+                                    val sessionType = item["type"]?.jsonPrimitive?.content ?: "THEORY"
+                                    val isEvent = sessionType == "EVENTO"
                                     val currentSubj = item["subject"]?.jsonPrimitive?.content ?: ""
-                                    
+
                                     Box(modifier = Modifier.weight(1f)) {
-                                        OutlinedCard(
-                                            onClick = { expanded = true },
-                                            modifier = Modifier.fillMaxWidth()
-                                        ) {
-                                            Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                                Text(
-                                                    text = currentSubj.ifBlank { stringResource(R.string.class_name_hint) },
-                                                    modifier = Modifier.weight(1f),
-                                                    style = MaterialTheme.typography.bodyMedium,
-                                                    fontWeight = if (currentSubj.isNotBlank()) FontWeight.Bold else FontWeight.Normal
-                                                )
-                                                Icon(Icons.Default.ArrowDropDown, null)
-                                            }
-                                        }
-                                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                            viewModel.semesterSubjects.forEach { subj ->
-                                                DropdownMenuItem(
-                                                    text = { Text(subj) },
-                                                    onClick = {
+                                        if (isEvent) {
+                                            OutlinedTextField(
+                                                value = currentSubj,
+                                                onValueChange = { newVal ->
+                                                    if (newVal.length <= 25) {
                                                         val newList = tempSchedule.toMutableList()
-                                                        val updated = item.toMutableMap().apply { put("subject", JsonPrimitive(subj)) }
+                                                        val updated = item.toMutableMap().apply { put("subject", JsonPrimitive(newVal)) }
                                                         newList[index] = JsonObject(updated)
                                                         tempSchedule = newList
-                                                        expanded = false
                                                     }
-                                                )
+                                                },
+                                                label = { Text(stringResource(R.string.event_title_label)) },
+                                                placeholder = { Text(stringResource(R.string.event_title_hint)) },
+                                                modifier = Modifier.fillMaxWidth(),
+                                                singleLine = true,
+                                                enabled = !isDeleted,
+                                                supportingText = {
+                                                    Text(
+                                                        text = "${currentSubj.length}/25",
+                                                        modifier = Modifier.fillMaxWidth(),
+                                                        textAlign = androidx.compose.ui.text.style.TextAlign.End,
+                                                        style = MaterialTheme.typography.labelSmall
+                                                    )
+                                                }
+                                            )
+                                        } else {
+                                            var expanded by remember { mutableStateOf(false) }
+                                            OutlinedCard(
+                                                onClick = { if (!isDeleted) expanded = true },
+                                                modifier = Modifier.fillMaxWidth(),
+                                                enabled = !isDeleted
+                                            ) {
+                                                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                                    Text(
+                                                        text = currentSubj.ifBlank { stringResource(R.string.class_name_hint) },
+                                                        modifier = Modifier.weight(1f),
+                                                        style = MaterialTheme.typography.bodyMedium,
+                                                        fontWeight = if (currentSubj.isNotBlank()) FontWeight.Bold else FontWeight.Normal
+                                                    )
+                                                    Icon(Icons.Default.ArrowDropDown, null)
+                                                }
+                                            }
+                                            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                                viewModel.semesterSubjects.forEach { subj ->
+                                                    DropdownMenuItem(
+                                                        text = { Text(subj) },
+                                                        onClick = {
+                                                            val newList = tempSchedule.toMutableList()
+                                                            val updated = item.toMutableMap().apply { put("subject", JsonPrimitive(subj)) }
+                                                            newList[index] = JsonObject(updated)
+                                                            tempSchedule = newList
+                                                            expanded = false
+                                                        }
+                                                    )
+                                                }
                                             }
                                         }
                                     }
 
                                     IconButton(onClick = {
+                                        val isManual = item["is_manual"]?.jsonPrimitive?.booleanOrNull ?: false
                                         val newList = tempSchedule.toMutableList()
-                                        newList.removeAt(index)
+                                        
+                                        if (isManual) {
+                                            // Hard Delete: Si es manual, se elimina de la lista
+                                            newList.removeAt(index)
+                                        } else {
+                                            // Soft Delete: Si es base, se marca como cancelada
+                                            val updated = item.toMutableMap().apply { 
+                                                put("deleted", JsonPrimitive(!isDeleted)) 
+                                            }
+                                            newList[index] = JsonObject(updated)
+                                        }
                                         tempSchedule = newList
-                                    }) { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error) }
+                                    }) { 
+                                        val isManual = item["is_manual"]?.jsonPrimitive?.booleanOrNull ?: false
+                                        Icon(
+                                            imageVector = if (isDeleted) Icons.Default.RestoreFromTrash 
+                                                         else if (isManual) Icons.Default.DeleteForever 
+                                                         else Icons.Default.Delete, 
+                                            contentDescription = null, 
+                                            tint = if (isDeleted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                                        ) 
+                                    }
                                 }
                                 
-                                // MARCADOR TEORÍA / PRÁCTICA
+                                // MARCADOR TEORÍA / PRÁCTICA / EVENTO
                                 Row(
                                     modifier = Modifier.padding(top = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    val isPractice = item["type"]?.jsonPrimitive?.content == "PRACTICE"
+                                    val currentType = item["type"]?.jsonPrimitive?.content ?: "THEORY"
+                                    
                                     FilterChip(
-                                        selected = !isPractice,
+                                        selected = currentType == "THEORY",
                                         onClick = {
                                             val newList = tempSchedule.toMutableList()
                                             val updated = item.toMutableMap().apply { put("type", JsonPrimitive("THEORY")) }
@@ -334,7 +418,7 @@ fun DailyExceptionDialog(date: String, viewModel: MainViewModel, onDismiss: () -
                                     )
                                     Spacer(Modifier.width(8.dp))
                                     FilterChip(
-                                        selected = isPractice,
+                                        selected = currentType == "PRACTICE",
                                         onClick = {
                                             val newList = tempSchedule.toMutableList()
                                             val updated = item.toMutableMap().apply { put("type", JsonPrimitive("PRACTICE")) }
@@ -346,6 +430,27 @@ fun DailyExceptionDialog(date: String, viewModel: MainViewModel, onDismiss: () -
                                                 Icon(Icons.Default.Computer, null, modifier = Modifier.size(16.dp))
                                                 Spacer(Modifier.width(4.dp))
                                                 Text("P")
+                                            }
+                                        }
+                                    )
+                                    Spacer(Modifier.width(8.dp))
+                                    FilterChip(
+                                        selected = currentType == "EVENTO",
+                                        onClick = {
+                                            val newList = tempSchedule.toMutableList()
+                                            val updated = item.toMutableMap().apply { 
+                                                put("type", JsonPrimitive("EVENTO"))
+                                                // Si pasamos a evento, limpiamos el subject para que escriba el título
+                                                put("subject", JsonPrimitive(""))
+                                            }
+                                            newList[index] = JsonObject(updated)
+                                            tempSchedule = newList
+                                        },
+                                        label = { 
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Icon(Icons.Default.Event, null, modifier = Modifier.size(16.dp))
+                                                Spacer(Modifier.width(4.dp))
+                                                Text("E")
                                             }
                                         }
                                     )
@@ -427,8 +532,9 @@ fun DailyExceptionDialog(date: String, viewModel: MainViewModel, onDismiss: () -
                             put("room", "-")
                             put("floor", "-")
                             put("building", "-")
+                            put("is_manual", JsonPrimitive(true)) // Marcar como manual inmediatamente
                         }
-                        tempSchedule = tempSchedule + newClass
+                        tempSchedule = (tempSchedule + newClass).sortedBy { it.jsonObject["start"]?.jsonPrimitive?.content ?: "00:00" }
                     },
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), contentColor = MaterialTheme.colorScheme.primary)
@@ -441,7 +547,8 @@ fun DailyExceptionDialog(date: String, viewModel: MainViewModel, onDismiss: () -
         },
         confirmButton = {
             Button(onClick = { 
-                val jsonArr = JsonArray(tempSchedule)
+                val sortedSchedule = tempSchedule.sortedBy { it.jsonObject["start"]?.jsonPrimitive?.content ?: "00:00" }
+                val jsonArr = JsonArray(sortedSchedule)
                 val jsonStr = Json.encodeToString(JsonArray.serializer(), jsonArr)
                 viewModel.saveDailyException(date, jsonStr)
                 onDismiss()
@@ -496,6 +603,7 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
     val start = record["start"]?.jsonPrimitive?.content ?: ""
     val status = record["status"]?.jsonPrimitive?.content ?: "UPCOMING"
     val isException = record["is_exception"]?.jsonPrimitive?.booleanOrNull ?: false
+    val isDeleted = record["is_deleted"]?.jsonPrimitive?.booleanOrNull ?: false
     val sessionType = record["type"]?.jsonPrimitive?.content ?: "THEORY"
     
     // Metadatos de localización
@@ -506,19 +614,19 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
     val cardColor = when(status) {
         "ATTENDED" -> MaterialTheme.colorScheme.surface
         "MISSED" -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f)
-        "HOLIDAY" -> MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.1f)
+        "HOLIDAY", "WEEKEND" -> MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.1f)
         else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f)
     }
     
     val borderColor = when(status) {
         "ATTENDED" -> MaterialTheme.colorScheme.outlineVariant
         "MISSED" -> MaterialTheme.colorScheme.error.copy(alpha = 0.3f)
-        "HOLIDAY" -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f)
+        "HOLIDAY", "WEEKEND" -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f)
         else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().alpha(if (isDeleted) 0.5f else 1f),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         border = BorderStroke(1.dp, borderColor)
     ) {
@@ -529,15 +637,38 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
                         text = if (status == "HOLIDAY") subject else subject.uppercase(), 
                         fontWeight = FontWeight.Black, 
                         style = MaterialTheme.typography.bodyLarge,
-                        color = if (status == "HOLIDAY") MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface
+                        color = if (status == "HOLIDAY") MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
+                        textDecoration = if (isDeleted) androidx.compose.ui.text.style.TextDecoration.LineThrough else null
                     )
+                    if (isDeleted) {
+                        Spacer(Modifier.width(8.dp))
+                        Surface(
+                            color = MaterialTheme.colorScheme.error,
+                            shape = MaterialTheme.shapes.extraSmall
+                        ) {
+                            Text(
+                                "CANCELADA", 
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onError
+                            )
+                        }
+                    }
                     if (status != "HOLIDAY") {
                         Spacer(Modifier.width(8.dp))
                         Icon(
-                            imageVector = if (sessionType == "PRACTICE") Icons.Default.Computer else Icons.AutoMirrored.Filled.MenuBook,
+                            imageVector = when(sessionType) {
+                                "PRACTICE" -> Icons.Default.Computer
+                                "EVENTO" -> Icons.Default.Event
+                                else -> Icons.AutoMirrored.Filled.MenuBook
+                            },
                             contentDescription = null,
                             modifier = Modifier.size(16.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                            tint = when(sessionType) {
+                                "EVENTO" -> MaterialTheme.colorScheme.tertiary
+                                else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                            }
                         )
                     }
                     if (isException) {
@@ -545,8 +676,16 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
                         Icon(Icons.Default.PushPin, null, modifier = Modifier.size(12.dp), tint = MaterialTheme.colorScheme.secondary)
                     }
                 }
+                val displayDate = try {
+                    val ld = LocalDate.parse(date)
+                    val dayName = ld.format(DateTimeFormatter.ofPattern("EEE")).uppercase()
+                    "$dayName ${ld.dayOfMonth}/${ld.monthValue}"
+                } catch(_: Exception) {
+                    date
+                }
+
                 Text(
-                    text = if (status == "HOLIDAY") date else "$date | $start", 
+                    text = if (status == "HOLIDAY" || status == "WEEKEND") displayDate else "$displayDate | $start", 
                     style = MaterialTheme.typography.bodySmall, 
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -572,7 +711,7 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
                     val isAttended = status == "ATTENDED"
                     
                     FilledTonalIconButton(
-                        onClick = { viewModel.toggleAttendance(date, subject, status) },
+                        onClick = { viewModel.toggleAttendance(date, subject, record["start"]?.jsonPrimitive?.content, status) },
                         modifier = Modifier.size(36.dp),
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
                             containerColor = if (isAttended) MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f) 
@@ -594,7 +733,7 @@ fun AttendanceRecordItem(record: JsonObject, viewModel: MainViewModel) {
                     "ATTENDED" -> Icon(Icons.Default.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
                     "MISSED" -> Icon(Icons.Default.Cancel, null, tint = MaterialTheme.colorScheme.error)
                     "UPCOMING" -> Icon(Icons.Default.Schedule, null, tint = Color.Gray)
-                    "HOLIDAY" -> Icon(Icons.Default.BeachAccess, null, tint = MaterialTheme.colorScheme.secondary)
+                    "HOLIDAY", "WEEKEND" -> Icon(Icons.Default.BeachAccess, null, tint = MaterialTheme.colorScheme.secondary)
                 }
             }
         }

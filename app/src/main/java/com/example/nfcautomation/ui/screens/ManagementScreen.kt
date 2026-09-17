@@ -203,6 +203,7 @@ fun AppSettingsList(viewModel: ManagementViewModel) {
 @Composable
 fun TagsList(viewModel: ManagementViewModel) {
     val workflowOptions = viewModel.workflows.keys.toList()
+    var tagToDelete by remember { mutableStateOf<String?>(null) }
     
     LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         items(viewModel.tags.toList()) { (uid, currentWorkflow) ->
@@ -231,7 +232,7 @@ fun TagsList(viewModel: ManagementViewModel) {
                             )
                         }
                     }
-                    IconButton(onClick = { viewModel.removeTag(uid) }) {
+                    IconButton(onClick = { tagToDelete = uid }) {
                         Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error)
                     }
                 }
@@ -252,6 +253,52 @@ fun TagsList(viewModel: ManagementViewModel) {
             }
         }
     }
+
+    if (tagToDelete != null) {
+        DeleteTagConfirmationDialog(
+            uid = tagToDelete!!,
+            onConfirm = { password ->
+                if (viewModel.checkDeletePassword(password)) {
+                    viewModel.removeTag(tagToDelete!!)
+                    tagToDelete = null
+                }
+            },
+            onDismiss = { tagToDelete = null }
+        )
+    }
+}
+
+@Composable
+fun DeleteTagConfirmationDialog(uid: String, onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
+    var password by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.dialog_delete_tag_title)) },
+        text = {
+            Column {
+                Text(stringResource(R.string.dialog_delete_tag_msg))
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "UID: $uid", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text(stringResource(R.string.dialog_password)) },
+                    singleLine = true,
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { onConfirm(password) },
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+            ) { Text(stringResource(R.string.dialog_delete_confirm)) }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.dialog_cancel)) }
+        }
+    )
 }
 
 @Composable

@@ -138,13 +138,6 @@
                 }
             },
             {
-                "action": "set_timer",
-                "params": {
-                    "seconds": 3000,
-                    "message": "Fin de la clase"
-                }
-            },
-            {
                 "action": "show_notification",
                 "params": {
                     "title": "Modo Clase: ON",

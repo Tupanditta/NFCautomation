@@ -13,37 +13,44 @@ object ConfigManager {
      */
     fun ensureConfigExists(context: Context): String {
         val configDir = File(context.filesDir, "config")
-        android.util.Log.i("ConfigManager", "Asegurando configuración en: ${configDir.absolutePath}")
+        val prefs = context.getSharedPreferences("config_prefs", Context.MODE_PRIVATE)
+        // Forzamos actualización a v6 para asegurar que workflows.json incluya TrackTime
+        val currentConfigVersion = "prod_v6_stable"
+        val isConfigInitialized = prefs.getBoolean(currentConfigVersion, false)
+
+        android.util.Log.i("ConfigManager", "Verificando configuración. Inicializada: $isConfigInitialized")
         
         if (!configDir.exists()) {
-            val created = configDir.mkdirs()
-            android.util.Log.i("ConfigManager", "Directorio creado: $created")
+            configDir.mkdirs()
         }
 
-        val filesToCopy = listOf("tags.json", "workflows.json", "states.json", "actions_template.json", "settings.json", "translations.json", "schedule_q1.json", "schedule_q2.json", "calendar_config.json", "time_logs.json")
+        val filesToCopy = listOf("tags.json", "workflows.json", "states.json", "actions_template.json", "settings.json", "translations.json", "schedule_q1.json", "schedule_q2.json", "calendar_config.json", "time_logs.json", "campus_config.json")
 
         filesToCopy.forEach { fileName ->
             val targetFile = File(configDir, fileName)
-            android.util.Log.i("ConfigManager", "Verificando archivo: $fileName (Existe: ${targetFile.exists()})")
             
-            // SIMULACIÓN: Forzamos la actualización de horarios y logs para la prueba de año completo
-            val isSimulationFile = fileName.startsWith("schedule_q") || fileName == "calendar_config.json" || fileName == "time_logs.json"
-            val forceUpdate = fileName == "translations.json" || fileName == "actions_template.json" || isSimulationFile
+            // REGLA DE PROTECCIÓN:
+            // 1. Los recursos estáticos (traducciones, iconos, calendario oficial) se actualizan siempre.
+            // 2. Los datos del usuario (horarios, etiquetas, logs) SOLO se copian si el archivo NO existe.
+            val isStaticResource = fileName == "translations.json" || fileName == "actions_template.json" || fileName == "campus_config.json" || fileName == "calendar_config.json"
             
-            if (!targetFile.exists() || forceUpdate) {
+            if (!targetFile.exists() || isStaticResource) {
                 try {
-                    android.util.Log.i("ConfigManager", "Copiando $fileName desde assets...")
                     context.assets.open("config/$fileName").use { inputStream ->
                         FileOutputStream(targetFile).use { outputStream ->
                             inputStream.copyTo(outputStream)
                         }
                     }
-                    android.util.Log.i("ConfigManager", "Copia de $fileName exitosa.")
+                    android.util.Log.d("ConfigManager", "Copiado/Actualizado: $fileName")
                 } catch (e: Exception) {
                     android.util.Log.e("ConfigManager", "Error al copiar $fileName: ${e.message}")
-                    e.printStackTrace()
                 }
             }
+        }
+
+        // Marcar como inicializado con la nueva versión
+        if (!isConfigInitialized) {
+            prefs.edit().putBoolean(currentConfigVersion, true).apply()
         }
 
         return configDir.absolutePath

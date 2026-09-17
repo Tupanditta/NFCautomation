@@ -1,0 +1,130 @@
+{
+    "buildings": [
+        {
+            "id": "1",
+            "name": "1. Aulario",
+            "search_query": "Aulario UPNA, Pamplona",
+            "description": "Edificio principal de aulas",
+            "type": "FACULTY",
+            "posX": 0.45,
+            "posY": 0.55
+        },
+        {
+            "id": "2",
+            "name": "2. Talleres y Laboratorios",
+            "search_query": "Talleres y Laboratorios UPNA, Pamplona",
+            "description": "Edificio de prácticas industriales",
+            "type": "LAB",
+            "posX": 0.35,
+            "posY": 0.45
+        },
+        {
+            "id": "3",
+            "name": "3. Biblio",
+            "search_query": "Biblioteca UPNA, Pamplona",
+            "description": "Biblioteca Central",
+            "type": "LIBRARY",
+            "posX": 0.55,
+            "posY": 0.40
+        },
+        {
+            "id": "4",
+            "name": "4. Acebos",
+            "search_query": "Edificio Los Acebos UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.25,
+            "posY": 0.35
+        },
+        {
+            "id": "5",
+            "name": "5. Modroños",
+            "search_query": "Edificio Los Madroños UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.20,
+            "posY": 0.40
+        },
+        {
+            "id": "6",
+            "name": "6. Magnolios",
+            "search_query": "Edificio Los Magnolios UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.15,
+            "posY": 0.45
+        },
+        {
+            "id": "7",
+            "name": "7. Encinas",
+            "search_query": "Edificio Las Encinas UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.10,
+            "posY": 0.50
+        },
+        {
+            "id": "8",
+            "name": "8. Tejos",
+            "search_query": "Edificio Los Tejos UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.05,
+            "posY": 0.55
+        },
+        {
+            "id": "9",
+            "name": "9. Pinos",
+            "search_query": "Edificio Los Pinos UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.10,
+            "posY": 0.60
+        },
+        {
+            "id": "10",
+            "name": "10. Olivos",
+            "search_query": "Edificio Los Olivos UPNA, Pamplona",
+            "description": "Departamentos y oficinas",
+            "type": "DEPT",
+            "posX": 0.15,
+            "posY": 0.65
+        },
+        {
+            "id": "12",
+            "name": "12. Cafetería",
+            "search_query": "Cafetería UPNA, Pamplona",
+            "description": "Zona de restauración",
+            "type": "SERVICE",
+            "posX": 0.65,
+            "posY": 0.60
+        },
+        {
+            "id": "13",
+            "name": "13. Comedores",
+            "search_query": "Comedores UPNA, Pamplona",
+            "description": "Restaurante universitario",
+            "type": "SERVICE",
+            "posX": 0.70,
+            "posY": 0.65
+        },
+        {
+            "id": "18",
+            "name": "18. Sario",
+            "search_query": "Edificio El Sario UPNA, Pamplona",
+            "description": "Edificio de usos múltiples y deportes",
+            "type": "FACULTY",
+            "posX": 0.85,
+            "posY": 0.80
+        },
+        {
+            "id": "21",
+            "name": "21. Pabellón UPNA",
+            "search_query": "Pabellón Universitario UPNA, Pamplona",
+            "description": "Polideportivo y eventos",
+            "type": "SPORTS",
+            "posX": 0.90,
+            "posY": 0.90
+        }
+    ]
+}

@@ -14,7 +14,8 @@ import java.time.DayOfWeek
 @Serializable
 data class AttendanceInfo(
     val subject: String,
-    val date: String
+    val date: String,
+    val startTime: String? = null
 )
 
 @Serializable
@@ -31,7 +32,7 @@ data class ExecutionResult(
 )
 
 enum class Screen {
-    MENU, EXECUTION, MANAGEMENT, ATTENDANCE, SCHEDULE_EDITOR
+    MENU, EXECUTION, MANAGEMENT, ATTENDANCE, SCHEDULE_EDITOR, CAMPUS_MAP
 }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -50,13 +51,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // Estados de Asistencia
     var attendanceSummary by mutableStateOf<JsonObject?>(null)
     var scheduleData by mutableStateOf<JsonObject?>(null)
-    var currentSemester by mutableStateOf("AUTO")
+    private val scheduleCache = mutableMapOf<String, JsonObject>() // Caché local para evitar pérdida de datos al cambiar de pestaña
+    var currentSemester by mutableStateOf("q1") // Por defecto Q1 para evitar el glitch de AUTO en el editor
     var attendanceStateFilter by mutableStateOf("ALL")
     var selectedTimeFilter by mutableStateOf("DAY")
     var timeMenuExpanded by mutableStateOf(false)
     
     // Anclaje temporal para navegación
-    var anchorDate by mutableStateOf(LocalDate.parse("2027-04-12"))
+    var anchorDate by mutableStateOf(LocalDate.now())
     
     // Estado de Edición de Día
     var editingDaySchedule by mutableStateOf<List<JsonObject>>(emptyList())
@@ -68,11 +70,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var exportResultFile by mutableStateOf<String?>(null)
     var exportErrorMessage by mutableStateOf<String?>(null)
 
+    // Estado de Campus
+    var campusBuildings by mutableStateOf<List<JsonObject>>(emptyList())
+    var buildingsInSchedule by mutableStateOf<Set<String>>(emptySet())
+
     private val json = Json { ignoreUnknownKeys = true }
 
     init {
         // Carga inicial robusta
         refreshState()
+        fetchCampusData() // Asegurar que los edificios se cargan al inicio para el editor y el mapa
     }
 
     fun refreshState() {
@@ -181,25 +188,40 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val result = json.parseToJsonElement(jsonResponse).jsonObject
             attendanceSummary = result
             
-            // Si el semestre era "AUTO", actualizamos al detectado para la UI
-            if (currentSemester == "AUTO") {
-                val detected = result["detected_semester"]?.jsonPrimitive?.content ?: "q1"
-                currentSemester = detected
-            }
+            // Sincronización de semestre si fuera necesario
+            // (Actualmente el Dispatcher ya maneja el semestre AUTO internamente)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     fun fetchScheduleData() {
+        // Si ya tenemos datos en caché para este semestre, los usamos en lugar de recargar del disco
+        if (scheduleCache.containsKey(currentSemester)) {
+            scheduleData = scheduleCache[currentSemester]
+            return
+        }
+
         try {
             val py = Python.getInstance()
             val module = py.getModule("bridge")
             val jsonResponse = module.callAttr("get_schedule_data", currentSemester).toString()
-            scheduleData = json.parseToJsonElement(jsonResponse).jsonObject
+            val data = json.parseToJsonElement(jsonResponse).jsonObject
+            scheduleData = data
+            scheduleCache[currentSemester] = data
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun updateWorkingSchedule(data: JsonObject) {
+        // Ordenar cada día por hora de inicio antes de actualizar
+        val sortedData = data.mapValues { (_, dayClasses) ->
+            JsonArray(dayClasses.jsonArray.sortedBy { it.jsonObject["start"]?.jsonPrimitive?.content ?: "00:00" })
+        }
+        val finalData = JsonObject(sortedData)
+        scheduleData = finalData
+        scheduleCache[currentSemester] = finalData
     }
 
     fun saveSchedule(scheduleJson: String) {
@@ -207,7 +229,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val py = Python.getInstance()
             val module = py.getModule("bridge")
             module.callAttr("save_schedule_data", scheduleJson, currentSemester)
-            fetchScheduleData() // Recargar
+            
+            // Actualizar caché y estado
+            val data = json.parseToJsonElement(scheduleJson).jsonObject
+            scheduleCache[currentSemester] = data
+            scheduleData = data
+            
             WidgetUtils.refreshWidgets(getApplication())
         } catch (e: Exception) {
             e.printStackTrace()
@@ -226,11 +253,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun toggleAttendance(date: String, subject: String, currentStatus: String) {
+    fun toggleAttendance(date: String, subject: String, startTime: String?, currentStatus: String) {
         try {
             val py = Python.getInstance()
             val module = py.getModule("bridge")
-            module.callAttr("toggle_attendance", date, subject, currentStatus)
+            module.callAttr("toggle_attendance", date, subject, startTime, currentStatus)
             
             // Si estamos en la pantalla de ejecución y modificamos la asistencia que se acaba de registrar,
             // limpiamos la info para que desaparezca el card.
@@ -315,12 +342,81 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun jumpToSemester(semester: String) {
+        val oldSemester = currentSemester
         currentSemester = semester
-        anchorDate = if (semester == "q1") {
-            LocalDate.parse("2026-09-02")
-        } else {
-            LocalDate.parse("2027-01-25")
+        
+        // Solo saltamos de fecha si el anclaje actual está MUY lejos del semestre destino
+        // o si venimos de un estado diferente.
+        val shouldJump = when(semester) {
+            "q1" -> anchorDate.isBefore(LocalDate.parse("2026-08-01")) || anchorDate.isAfter(LocalDate.parse("2026-12-31"))
+            "q2" -> anchorDate.isBefore(LocalDate.parse("2027-01-01")) || anchorDate.isAfter(LocalDate.parse("2027-06-01"))
+            else -> false
+        }
+
+        if (shouldJump || oldSemester == "AUTO") {
+            anchorDate = if (semester == "q1") {
+                LocalDate.parse("2026-09-02")
+            } else {
+                LocalDate.parse("2027-01-25")
+            }
         }
         fetchAttendanceData()
+    }
+
+    fun resetToToday() {
+        anchorDate = LocalDate.now()
+        currentSemester = "AUTO"
+        selectedTimeFilter = "DAY"
+        fetchAttendanceData()
+    }
+
+    fun changeTimeFilter(newFilter: String) {
+        val oldFilter = selectedTimeFilter
+        selectedTimeFilter = newFilter
+        
+        when {
+            // De ANUAL a DÍA -> Vamos a hoy
+            oldFilter == "YEAR" && newFilter == "DAY" -> {
+                anchorDate = LocalDate.now()
+            }
+            // De MES a DÍA -> Vamos al día 1 de ese mes
+            oldFilter == "MONTH" && newFilter == "DAY" -> {
+                anchorDate = anchorDate.withDayOfMonth(1)
+            }
+        }
+        
+        fetchAttendanceData()
+    }
+
+    // --- Lógica de Campus ---
+
+    fun fetchCampusData() {
+        try {
+            val py = Python.getInstance()
+            val module = py.getModule("bridge")
+            
+            // 1. Cargar edificios pre-configurados
+            val configResponse = module.callAttr("get_campus_config").toString()
+            val config = json.parseToJsonElement(configResponse).jsonObject
+            campusBuildings = config["buildings"]?.jsonArray?.map { it.jsonObject } ?: emptyList()
+            
+            // 2. Extraer edificios del horario actual
+            val scheduleResponse = module.callAttr("get_schedule_data", currentSemester).toString()
+            val schedule = json.parseToJsonElement(scheduleResponse).jsonObject
+            
+            val detectedBuildings = mutableSetOf<String>()
+            schedule.forEach { (_, dayClasses) ->
+                dayClasses.jsonArray.forEach { classItem ->
+                    val building = classItem.jsonObject["building"]?.jsonPrimitive?.contentOrNull
+                    if (!building.isNullOrBlank() && building != "-") {
+                        detectedBuildings.add(building)
+                    }
+                }
+            }
+            buildingsInSchedule = detectedBuildings
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

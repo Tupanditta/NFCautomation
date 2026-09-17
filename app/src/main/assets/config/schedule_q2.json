@@ -1,71 +1,9 @@
 {
-    "lunes": [
-        {
-            "start": "08:30",
-            "end": "10:30",
-            "subject": "Álgebra II",
-            "room": "105",
-            "floor": "1",
-            "building": "Edificio Central",
-            "type": "THEORY"
-        },
-        {
-            "start": "11:00",
-            "end": "13:00",
-            "subject": "Sistemas Operativos",
-            "room": "Lab 4",
-            "floor": "2",
-            "building": "Facultad Informática",
-            "type": "PRACTICE"
-        },
-        {
-            "start": "15:00",
-            "end": "17:00",
-            "subject": "Estructuras de Datos",
-            "room": "201",
-            "floor": "2",
-            "building": "Facultad Informática",
-            "type": "THEORY"
-        }
-    ],
-    "martes": [
-        {
-            "start": "11:00",
-            "end": "13:00",
-            "subject": "Sistemas Operativos",
-            "room": "Lab 4",
-            "floor": "2",
-            "building": "Facultad Informática"
-        }
-    ],
-    "miercoles": [
-        {
-            "start": "08:30",
-            "end": "10:30",
-            "subject": "Estructuras de Datos",
-            "room": "201",
-            "floor": "2",
-            "building": "Facultad Informática"
-        }
-    ],
-    "jueves": [
-        {
-            "start": "09:00",
-            "end": "11:00",
-            "subject": "Física II",
-            "room": "102",
-            "floor": "1",
-            "building": "Facultad Ciencias"
-        }
-    ],
-    "viernes": [
-        {
-            "start": "10:00",
-            "end": "12:00",
-            "subject": "Ética Profesional",
-            "room": "301",
-            "floor": "3",
-            "building": "Facultad Letras"
-        }
-    ]
+    "lunes": [],
+    "martes": [],
+    "miercoles": [],
+    "jueves": [],
+    "viernes": [],
+    "sabado": [],
+    "domingo": []
 }

@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime, timedelta
+from mobile.utils.translator import translate
 
 def get_calendar_config(config_dir):
     """Carga la configuración del calendario académico."""
@@ -32,7 +33,7 @@ def is_holiday(date_obj, config):
         elif isinstance(h, dict):
             start = datetime.strptime(h["start"], "%Y-%m-%d")
             end = datetime.strptime(h["end"], "%Y-%m-%d")
-            if start <= date_obj <= end: return True
+            if start <= date_obj <= end: return h
     return False
 
 def get_semester_for_date(date_obj, config):
@@ -58,7 +59,12 @@ def get_schedule(config_dir, semester="q1"):
             return data
         return {}
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+        # Ordenar cada día por hora de inicio
+        for day in data:
+            if isinstance(data[day], list):
+                data[day].sort(key=lambda x: x.get("start", "00:00"))
+        return data
 
 def save_schedule(config_dir, schedule_data, semester="q1"):
     filename = f"schedule_{semester.lower()}.json"
@@ -71,8 +77,11 @@ def get_exceptions(config_dir):
     path = os.path.join(config_dir, "schedule_exceptions.json")
     if not os.path.exists(path):
         return {}
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
 
 def save_exception(config_dir, date_str, daily_schedule):
     exceptions = get_exceptions(config_dir)
@@ -96,20 +105,56 @@ def get_day_schedule(config_dir, date_str, semester=None):
         semester = get_semester_for_date(date_obj, calendar) or "q1"
         
     exceptions = get_exceptions(config_dir)
-    if date_str in exceptions:
-        return exceptions[date_str], True # (schedule, is_exception)
+    has_daily_exception = date_str in exceptions
     
     day_name_en = date_obj.strftime("%A").lower()
     days_map = {"monday": "lunes", "tuesday": "martes", "wednesday": "miercoles", "thursday": "jueves", "friday": "viernes", "saturday": "sabado", "sunday": "domingo"}
     day_key = days_map.get(day_name_en, day_name_en)
     
     base_schedule = get_schedule(config_dir, semester)
-    # Aseguramos que tengan session_type por defecto si no existe
-    day_list = base_schedule.get(day_key, [])
-    for item in day_list:
+    day_base = base_schedule.get(day_key, [])
+    
+    # Aseguramos que tengan session_type y subject por defecto si no existe e is_manual=False
+    for item in day_base:
         if "type" not in item: item["type"] = "THEORY"
+        if not item.get("subject"): 
+            item["subject"] = item.get("label", "")
+        item["is_manual"] = False
         
-    return day_list, False
+    if not has_daily_exception:
+        day_base.sort(key=lambda x: x.get("start", "00:00"))
+        return day_base, False
+    
+    # Si hay excepción, calculamos qué items son manuales (no estaban en el base)
+    enriched_schedule = []
+    day_schedule = exceptions[date_str]
+    
+    for item in day_schedule:
+        is_manual = True
+        for base_item in day_base:
+            base_subj = base_item.get("subject") or base_item.get("label", "")
+            item_subj = item.get("subject") or item.get("label", "")
+            
+            if (base_subj == item_subj and 
+                base_item.get("start") == item.get("start") and 
+                base_item.get("end") == item.get("end") and 
+                base_item.get("room") == item.get("room") and 
+                base_item.get("floor") == item.get("floor") and 
+                base_item.get("building") == item.get("building") and 
+                base_item.get("type", "THEORY") == item.get("type", "THEORY")):
+                is_manual = False
+                break
+        
+        item_copy = dict(item)
+        item_copy["is_manual"] = is_manual
+        if "type" not in item_copy: item_copy["type"] = "THEORY"
+        if not item_copy.get("subject"):
+            item_copy["subject"] = item_copy.get("label", "")
+        enriched_schedule.append(item_copy)
+    
+    # Ordenar por hora de inicio
+    enriched_schedule.sort(key=lambda x: x.get("start", "00:00"))
+    return enriched_schedule, True
 
 def get_semester_subjects(config_dir, semester="q1"):
     """Retorna la lista única de asignaturas de un cuatrimestre."""
@@ -121,16 +166,18 @@ def get_semester_subjects(config_dir, semester="q1"):
     return sorted(list(subjects))
 
 def is_academic_day(config_dir, date_str):
-    """Verifica si un día es lectivo (L-V y no festivo)."""
+    """Verifica si un día está dentro del periodo lectivo (dentro de semestre y no festivo)."""
     calendar = get_calendar_config(config_dir)
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    if date_obj.weekday() >= 5: return False # Fin de semana
+    
+    # Eliminamos la restricción de fin de semana (L-V) para permitir eventos en S-D
     if is_holiday(date_obj, calendar): return False
-    # También debe estar dentro de algún semestre
+    
+    # Debe estar dentro de algún semestre para cargar el horario base
     if get_semester_for_date(date_obj, calendar) is None: return False
     return True
 
-def toggle_manual_attendance(config_dir, date_str, subject, current_status):
+def toggle_manual_attendance(config_dir, date_str, subject, start_time, current_status):
     """
     Cambia manualmente el estado de asistencia de una clase.
     Si era ATTENDED, elimina el log. Si era MISSED, crea uno manual.
@@ -149,22 +196,33 @@ def toggle_manual_attendance(config_dir, date_str, subject, current_status):
         new_logs = []
         found = False
         for log in logs:
-            # Comprobación estricta de fecha y asignatura
+            # Comprobación estricta de fecha, asignatura y ventana horaria
             if not found and log.get("mode") == "CLASS" and log.get("details") == subject:
                 try:
                     log_time = datetime.strptime(log["timestamp"], "%Y-%m-%d %H:%M:%S")
-                    if log_time.strftime("%Y-%m-%d") == date_str:
-                        found = True
-                        continue
+                    log_date = log_time.strftime("%Y-%m-%d")
+                    log_hour = log_time.strftime("%H:%M")
+                    
+                    # Si coincide la fecha Y (es el mismo subject Y está en el rango de esa clase)
+                    if log_date == date_str:
+                        # Buscamos si el log cae en la clase que intentamos desmarcar
+                        # (O si es un registro manual sin hora específica pero misma fecha)
+                        if log.get("source") == "MANUAL" or (start_time and log_hour >= start_time):
+                             found = True
+                             continue
                 except:
                     pass
             new_logs.append(log)
         logs = new_logs
     else:
         # Crear un log manual (MISSED -> ATTENDED)
-        # Usamos la fecha indicada y la hora actual del sistema para el registro
-        # (Esto asegura que se vea como un evento ocurrido en el día solicitado)
-        timestamp = f"{date_str} {datetime.now().strftime('%H:%M:%S')}"
+        # Usamos la fecha indicada y, si tenemos start_time, lo usamos como referencia 
+        # para que el summary lo detecte correctamente.
+        time_part = datetime.now().strftime('%H:%M:%S')
+        if start_time:
+            time_part = f"{start_time}:00"
+            
+        timestamp = f"{date_str} {time_part}"
         
         logs.append({
             "timestamp": timestamp,
@@ -185,20 +243,22 @@ def get_attendance_summary(config_dir, filter_type="DAY", semester=None, state_f
     """
     calendar = get_calendar_config(config_dir)
     
-    # SIMULACIÓN: Nuestra fecha "actual" (el punto de corte para UPCOMING)
-    simulated_now = datetime(2027, 4, 12, 10, 0, 0) 
-    
-    # Fecha de referencia para el filtro (si no viene, usamos la simulación)
+    # Fecha de referencia para el filtro (si no viene, usamos la del sistema)
     if base_date_str:
         ref_date = datetime.strptime(base_date_str, "%Y-%m-%d")
     else:
-        ref_date = simulated_now
+        ref_date = datetime.now()
 
     # Si no se especifica semestre, detectamos el de la fecha de referencia
     if semester is None or semester == "AUTO":
-        semester = get_semester_for_date(ref_date, calendar) or "q1"
+        detected = get_semester_for_date(ref_date, calendar)
+        if detected:
+            semester = detected
+        else:
+            # Si no estamos en un semestre (ej: verano), buscamos si estamos cerca de uno
+            # o simplemente usamos q1 por defecto para cargar el horario base.
+            semester = "q1"
 
-    base_schedule = get_schedule(config_dir, semester)
     exceptions = get_exceptions(config_dir)
     
     logs_path = os.path.join(config_dir, "time_logs.json")
@@ -249,68 +309,69 @@ def get_attendance_summary(config_dir, filter_type="DAY", semester=None, state_f
     while current_date <= end_view:
         date_str = current_date.strftime("%Y-%m-%d")
         
-        # REGLA 1: ¿Es festivo?
+        # REGLA 1: Obtener estado del día
         holiday = is_holiday(current_date, calendar)
+        has_exception = date_str in exceptions
+        is_lectivo = is_academic_day(config_dir, date_str)
         
-        # REGLA 2: ¿Está fuera del semestre seleccionado?
-        # Solo aplicamos esta restricción si estamos generando el horario base.
-        in_semester = get_semester_for_date(current_date, calendar) == semester
+        # Obtenemos el horario (base o excepción)
+        day_schedule, _ = get_day_schedule(config_dir, date_str, semester if filter_type != "YEAR" else get_semester_for_date(current_date, calendar))
         
-        if not holiday and in_semester:
-            day_name_en = current_date.strftime("%A").lower()
-            days_map = {"monday": "lunes", "tuesday": "martes", "wednesday": "miercoles", "thursday": "jueves", "friday": "viernes", "saturday": "sabado", "sunday": "domingo"}
-            day_key = days_map.get(day_name_en, day_name_en)
-            
-            # Cargamos el base para comparar
-            day_base = base_schedule.get(day_key, [])
-            
-            if date_str in exceptions:
-                day_schedule = exceptions[date_str]
-            else:
-                day_schedule = day_base
-
+        # DECISIÓN CRÍTICA: ¿Qué mostramos?
+        # Si hay excepción manual, manda la excepción (el usuario manda sobre el calendario).
+        # Si es festivo y NO hay excepción, bloqueamos el horario base.
+        should_show_classes = (day_schedule and not holiday) or has_exception
+        
+        if should_show_classes:
             for item in day_schedule:
+                # ... (resto de la lógica de procesamiento de items sigue igual)
                 subject = item.get("subject")
                 start_time = item.get("start")
                 end_time = item.get("end")
                 
-                # DETERMINAR SI ES EXCEPCIÓN REAL (Comparación profunda)
+                # DETERMINAR SI ES EXCEPCIÓN REAL
                 is_manual_exception = False
-                if date_str in exceptions:
-                    # Buscamos si existe una clase IDÉNTICA en el horario base
+                if has_exception:
+                    day_name_en = current_date.strftime("%A").lower()
+                    days_map = {"monday": "lunes", "tuesday": "martes", "wednesday": "miercoles", "thursday": "jueves", "friday": "viernes", "saturday": "sabado", "sunday": "domingo"}
+                    day_key = days_map.get(day_name_en, day_name_en)
+                    base_schedule = get_schedule(config_dir, semester if filter_type != "YEAR" else get_semester_for_date(current_date, calendar))
+                    day_base = base_schedule.get(day_key, [])
+                    
                     is_manual_exception = True
                     for base_item in day_base:
-                        # Si todos los campos clave coinciden, no es una excepción visual
                         if (base_item.get("subject") == subject and 
                             base_item.get("start") == start_time and 
                             base_item.get("end") == end_time and 
                             base_item.get("room") == item.get("room") and 
-                            base_item.get("floor") == item.get("floor") and 
-                            base_item.get("building") == item.get("building") and 
                             base_item.get("type", "THEORY") == item.get("type", "THEORY")):
                             is_manual_exception = False
                             break
 
-                # Verificación de asistencia
+                # Verificación de asistencia precisa
                 attended = False
                 for log in class_logs:
-                    log_time = datetime.strptime(log["timestamp"], "%Y-%m-%d %H:%M:%S")
-                    if log_time.strftime("%Y-%m-%d") == date_str:
-                        if log.get("details") == subject:
-                            attended = True
-                            break
-                        log_hour = log_time.strftime("%H:%M")
-                        if start_time <= log_hour <= end_time:
-                            attended = True
-                            break
+                    try:
+                        log_time = datetime.strptime(log["timestamp"], "%Y-%m-%d %H:%M:%S")
+                        if log_time.strftime("%Y-%m-%d") == date_str:
+                            log_hour = log_time.strftime("%H:%M")
+                            if log.get("details") == subject:
+                                margin_start = (datetime.strptime(start_time, "%H:%M") - timedelta(minutes=15)).strftime("%H:%M")
+                                if margin_start <= log_hour <= end_time:
+                                    attended = True
+                                    break
+                    except: continue
 
                 class_start_dt = datetime.strptime(f"{date_str} {start_time}", "%Y-%m-%d %H:%M")
                 class_end_dt = datetime.strptime(f"{date_str} {end_time}", "%Y-%m-%d %H:%M")
                 
                 status = "MISSED"
                 if attended: status = "ATTENDED"
-                elif class_start_dt > simulated_now: status = "UPCOMING"
-                elif class_start_dt <= simulated_now <= class_end_dt and not attended: status = "UPCOMING"
+                elif class_start_dt > datetime.now(): status = "UPCOMING"
+                elif class_start_dt <= datetime.now() <= class_end_dt and not attended: status = "UPCOMING"
+
+                is_deleted = item.get("deleted", False)
+                if is_manual_exception and is_deleted: continue
 
                 if state_filter == "ALL" or state_filter == status:
                     summary.append({
@@ -321,23 +382,40 @@ def get_attendance_summary(config_dir, filter_type="DAY", semester=None, state_f
                         "end": end_time,
                         "status": status,
                         "is_exception": is_manual_exception,
+                        "is_deleted": is_deleted,
                         "type": item.get("type", "THEORY"),
                         "room": item.get("room", "-"),
                         "floor": item.get("floor", "-"),
                         "building": item.get("building", "-")
                     })
                 
-                if status == "ATTENDED": total_attended += 1
-                elif status == "MISSED": total_missed += 1
-                elif status == "UPCOMING": total_upcoming += 1
-        elif holiday:
-            # Podríamos añadir una entrada tipo "FESTIVO" si es vista de DÍA
-            if filter_type == "DAY":
-                summary.append({"date": date_str, "status": "HOLIDAY", "subject": "Festivo / Vacaciones"})
+                if not is_deleted:
+                    if status == "ATTENDED": total_attended += 1
+                    elif status == "MISSED": total_missed += 1
+                    elif status == "UPCOMING": total_upcoming += 1
+        
+        # REGLA 2: Si no hay clases pero es un día especial (Festivo/Finde) en vista DAY, mostrar etiqueta
+        elif filter_type == "DAY":
+            is_weekend = current_date.weekday() >= 5
+            holiday = is_holiday(current_date, calendar)
+            
+            if holiday:
+                label = holiday["label"] if isinstance(holiday, dict) else "Festivo / Vacaciones"
+                summary.append({"date": date_str, "status": "HOLIDAY", "subject": label})
+            elif is_weekend:
+                summary.append({"date": date_str, "status": "WEEKEND", "subject": translate("status_weekend", "logs")})
+            elif is_academic_day(config_dir, date_str):
+                summary.append({"date": date_str, "status": "FREE", "subject": "Sin clases programadas"})
 
         current_date += timedelta(days=1)
 
-    summary.sort(key=lambda x: (x.get("date", ""), x.get("start", "")), reverse=True)
+    # Ordenar por fecha (DESC) y luego por hora de inicio (ASC) para cada día
+    summary.sort(key=lambda x: (x.get("date", ""), x.get("start", ""))) # Primero ASC global
+    
+    # Agrupar por fecha y asegurar que dentro de la fecha sea ASC, pero las fechas sean DESC
+    # Al ser sort estable, si ordenamos por start ASC y luego por date DESC funciona
+    summary.sort(key=lambda x: x.get("start", "00:00"))
+    summary.sort(key=lambda x: x.get("date", ""), reverse=True)
 
     return {
         "records": summary,

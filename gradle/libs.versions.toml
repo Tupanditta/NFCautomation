@@ -11,6 +11,11 @@ composeBom = "2026.06.01"
 chaquopy = "17.0.0"
 glance = "1.1.1"
 
+# SDK Versions
+sdk-compile = "37"
+sdk-min = "26"
+sdk-target = "35"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

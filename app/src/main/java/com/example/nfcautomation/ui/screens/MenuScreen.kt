@@ -59,6 +59,11 @@ fun MenuScreen(viewModel: MainViewModel, onGoToManagement: () -> Unit) {
         // Nueva Tarjeta de Asistencia
         AttendanceQuickCard(onClick = { viewModel.currentScreen = Screen.ATTENDANCE })
         
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Nueva Tarjeta de Mapa
+        CampusMapQuickCard(onClick = { viewModel.currentScreen = Screen.CAMPUS_MAP })
+        
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
@@ -219,6 +224,42 @@ fun AttendanceQuickCard(onClick: () -> Unit) {
                 Icons.Default.ChevronRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+            )
+        }
+    }
+}
+
+@Composable
+fun CampusMapQuickCard(onClick: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().height(80.dp),
+        onClick = onClick,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Default.Map, 
+                contentDescription = null, 
+                tint = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.size(32.dp)
+            )
+            Spacer(modifier = Modifier.width(20.dp))
+            Text(
+                text = stringResource(R.string.campus_map_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.secondary,
+                letterSpacing = 1.sp
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
             )
         }
     }

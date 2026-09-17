@@ -14,7 +14,8 @@ data class ClassSession(
     val floor: String = "-",
     val building: String = "-",
     val type: String = "THEORY",
-    val isException: Boolean = false
+    val isException: Boolean = false,
+    val isDeleted: Boolean = false
 )
 
 class ScheduleRepository(private val context: Context) {
@@ -22,26 +23,23 @@ class ScheduleRepository(private val context: Context) {
     private val configDir = File(context.filesDir, "config")
 
     fun getEffectiveSchedule(date: LocalDate): List<ClassSession> {
-        // SIMULACIÓN: Si la fecha es hoy (2026), forzamos a Abril 2027 para la prueba del usuario
-        val effectiveDate = if (date.year == 2026) LocalDate.parse("2027-04-12") else date
-        val dateStr = effectiveDate.toString()
+        val dateStr = date.toString()
+        val exceptions = getExceptions()
+        val hasException = exceptions.containsKey(dateStr)
         
-        // 1. Verificar si es festivo o fuera de semestre
-        if (!isAcademicDay(effectiveDate)) return emptyList()
+        // 1. Si no es día lectivo y no hay una excepción manual, no hay clases
+        if (!isAcademicDay(date) && !hasException) return emptyList()
 
-        // 2. Cargar horario base del semestre correspondiente
-        val semester = getSemesterForDate(effectiveDate) ?: return emptyList()
-        val baseSchedule = getBaseSchedule(semester)
-        val dayKey = getDayKey(effectiveDate)
+        // 2. Intentar cargar el horario base del semestre (si existe)
+        val semester = getSemesterForDate(date)
+        val dayKey = getDayKey(date)
+        val baseSchedule = if (semester != null) getBaseSchedule(semester) else JsonObject(emptyMap())
         val dayBase = baseSchedule[dayKey]?.jsonArray?.toList() ?: emptyList()
 
-        // 3. Cargar excepciones
-        val exceptions = getExceptions()
-        
-        return if (exceptions.containsKey(dateStr)) {
+        val result = if (hasException) {
             val dayOverride = exceptions[dateStr]?.jsonArray?.toList() ?: emptyList()
             
-            dayOverride.map { overrideItem ->
+            dayOverride.mapNotNull { overrideItem ->
                 val itemObj = overrideItem.jsonObject
                 
                 // DETERMINAR SI ES EXCEPCIÓN REAL (Comparación profunda, tolerante y normalizada)
@@ -68,11 +66,19 @@ class ScheduleRepository(private val context: Context) {
                         break
                     }
                 }
+                
+                // REGLA: Si es una modificación manual y está marcada como borrada, se elimina completamente (Hard Delete)
+                if (isRealException && (itemObj["deleted"]?.jsonPrimitive?.booleanOrNull == true)) {
+                    return@mapNotNull null
+                }
+
                 itemObj.toSession(isRealException)
             }
         } else {
             dayBase.map { it.jsonObject.toSession(false) }
         }
+
+        return result.sortedBy { it.start }
     }
 
     private fun isAcademicDay(date: LocalDate): Boolean {
@@ -143,7 +149,8 @@ class ScheduleRepository(private val context: Context) {
             floor = this["floor"]?.jsonPrimitive?.content ?: "-",
             building = this["building"]?.jsonPrimitive?.content ?: "-",
             type = this["type"]?.jsonPrimitive?.content ?: "THEORY",
-            isException = isException
+            isException = isException,
+            isDeleted = this["deleted"]?.jsonPrimitive?.booleanOrNull ?: false
         )
     }
 }

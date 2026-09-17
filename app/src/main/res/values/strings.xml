@@ -40,6 +40,8 @@
     <string name="dialog_back">ATRÁS</string>
     <string name="dialog_delete_title">Seguridad de Borrado</string>
     <string name="dialog_delete_msg">¿Estás seguro de borrar \'%s\'? Esta acción no se puede deshacer.</string>
+    <string name="dialog_delete_tag_title">Eliminar Etiqueta</string>
+    <string name="dialog_delete_tag_msg">¿Estás seguro de que quieres eliminar esta etiqueta? Tendrás que volver a escanearla si quieres usarla de nuevo.</string>
     <string name="dialog_delete_confirm">BORRAR DEFINITIVAMENTE</string>
     <string name="dialog_password">Contraseña</string>
     <string name="dialog_new_tag_title">Registrar Nueva Etiqueta</string>
@@ -68,15 +70,18 @@
     <string name="back_to_start">VOLVER AL INICIO</string>
     <string name="unknown_target">DESCONOCIDO</string>
     <string name="actions_performed">ACCIONES REALIZADAS</string>
+    <string name="execution_details">DETALLES DE EJECUCIÓN</string>
     <string name="class_registered">CLASE REGISTRADA</string>
     <string name="unmark_attendance">Marcar como no asistida</string>
 
     <!-- Asistencia y Horario -->
     <string name="attendance_title">ASISTENCIA</string>
     <string name="schedule_title">HORARIO DE CLASES</string>
-    <string name="filter_day">HOY</string>
+    <string name="filter_day">DÍA</string>
     <string name="filter_week">SEMANA</string>
     <string name="filter_month">MES</string>
+    <string name="filter_year">ANUAL</string>
+    <string name="filter_today">HOY</string>
     <string name="attended_label">ASISTIDAS</string>
     <string name="missed_label">FALTADAS</string>
     <string name="upcoming_label">PENDIENTES</string>
@@ -86,6 +91,7 @@
     <string name="status_attended">Asistido</string>
     <string name="status_missed">Faltado</string>
     <string name="status_upcoming">Pendiente</string>
+    <string name="status_weekend">Finde</string>
     <string name="edit_schedule">EDITAR HORARIO</string>
     <string name="add_class">Añadir Clase</string>
     <string name="subject_label">Asignatura</string>
@@ -107,7 +113,10 @@
     <string name="add_class_short">Añadir</string>
     <string name="session_theory">TEORÍA</string>
     <string name="session_practice">PRÁCTICA</string>
+    <string name="session_event">EVENTO</string>
     <string name="session_type_label">Tipo de Sesión</string>
+    <string name="event_title_label">Título del Evento</string>
+    <string name="event_title_hint">Ej: Conferencia, Deporte...</string>
 
     <!-- Exportación -->
     <string name="export_title">EXPORTAR INFORME</string>
@@ -138,4 +147,8 @@
     <string name="err_read_fail">Error: No se pudo leer el ID de la etiqueta.</string>
     <string name="err_python">Error en el motor de lógica (Python): </string>
     <string name="err_unexpected">Error inesperado: </string>
+
+    <!-- Mapa del Campus -->
+    <string name="campus_map_title">MAPA DEL CAMPUS</string>
+    <string name="all_campus_buildings">TODOS LOS EDIFICIOS</string>
 </resources>

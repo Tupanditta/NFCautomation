@@ -112,11 +112,22 @@ class ClassDetailWidget : GlanceAppWidget() {
                     style = TextStyle(
                         fontWeight = FontWeight.Bold, 
                         fontSize = 15.sp, 
-                        color = if (session.isException) GlanceTheme.colors.onPrimaryContainer else GlanceTheme.colors.onSurface
+                        color = if (session.isException) GlanceTheme.colors.onPrimaryContainer else GlanceTheme.colors.onSurface,
+                        textDecoration = if (session.isDeleted) TextDecoration.LineThrough else TextDecoration.None
                     ),
                     modifier = GlanceModifier.defaultWeight()
                 )
-                if (session.isException) {
+                if (session.isDeleted) {
+                    Text(
+                        text = " CANCELADA",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 10.sp,
+                            color = GlanceTheme.colors.error
+                        )
+                    )
+                }
+                if (session.isException && !session.isDeleted) {
                     Text(
                         text = "📌", 
                         style = TextStyle(fontSize = 12.sp, color = if (session.isException) GlanceTheme.colors.onPrimaryContainer else GlanceTheme.colors.primary)

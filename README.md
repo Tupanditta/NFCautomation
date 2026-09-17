@@ -41,7 +41,7 @@
 | `enable_dnd` | Controla el modo "No Molestar" | `enabled` |
 | `track_time` | Registra eventos de tiempo | `mode`, `event`, `details` |
 | `toggle_flashlight` | Controla el LED de la cámara | `enabled` |
-| `set_timer` | Inicia una cuenta atrás | `duration_seconds` |
+| `open_timer` | Abre la pestaña de temporizador | - |
 | `vibrate` | Feedback háptico inmediato | `duration_ms` |
 | `open_app` | Lanza aplicaciones instaladas | `alias` |
 

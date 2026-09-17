@@ -64,12 +64,12 @@
             "notas": "Usa 'true', 'false' o 'null' para conmutar el estado."
         },
         {
-            "action": "set_timer",
-            "params": {
-                "seconds": 60,
-                "message": "Arroz listo"
-            },
-            "notas": "Abre la app de Reloj para confirmar el temporizador."
+            "action": "open_timer",
+            "notas": "Abre la app de Reloj en la pestaña de temporizador."
+        },
+        {
+            "action": "open_alarm",
+            "notas": "Abre la app de Reloj en la pestaña de alarmas."
         },
         {
             "action": "toggle_hotspot",
